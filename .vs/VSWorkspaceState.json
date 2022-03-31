@@ -3,9 +3,7 @@
     "",
     "\\Libraries",
     "\\Libraries\\glad",
-    "\\Libraries\\glfw",
     "\\source"
   ],
-  "SelectedNode": "\\Libraries\\glfw\\.mailmap",
   "PreviewInSolutionExplorer": false
 }
