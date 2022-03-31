@@ -1,0 +1,10 @@
+^C:\USERS\POLLO\ONEDRIVE\DOCUMENTOS\U\ARQUI MOTORES DE JUEGO\BOOMBOOMENGINE\TEST\BUILD\CMAKEFILES\E473507A181EE1EC2D220E2CE06274AA\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/source" "-BC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/build/main_project.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

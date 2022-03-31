@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\pollo\OneDrive\Documentos\U\Arqui Motores de Juego\BoomBoomEngine\Test\build\CMakeFiles\e473507a181ee1ec2d220e2ce06274aa\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{4E8370CF-D56E-39C1-95D3-92D729D69D40}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
