@@ -1,6 +1,6 @@
-^C:\USERS\POLLO\ONEDRIVE\DOCUMENTOS\U\ARQUI MOTORES DE JUEGO\BOOMBOOMENGINE\TEST\SOURCE\CMAKELISTS.TXT
+^C:\USERS\POLLO\ONEDRIVE\DOCUMENTOS\U\ARQUI MOTORES DE JUEGO\BOOMBOOMENGINE\SOURCE\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/source" "-BC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/build" --check-stamp-file "C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Test/build/CMakeFiles/generate.stamp"
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/source" "-BC:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/build" --check-stamp-file "C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/build/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

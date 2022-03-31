@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Test",
-    "\\Test\\build",
-    "\\Test\\source"
+    "\\build",
+    "\\source"
   ],
-  "SelectedNode": "\\Test\\build\\main_project.sln",
+  "SelectedNode": "\\build",
   "PreviewInSolutionExplorer": false
 }
