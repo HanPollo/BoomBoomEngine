@@ -1,6 +1,0 @@
-﻿  Building Custom Rule C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/source/CMakeLists.txt
-  main.cpp
-  console_print.cpp
-  Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  main.vcxproj -> C:\Users\pollo\OneDrive\Documentos\U\Arqui Motores de Juego\BoomBoomEngine\build\Debug\main.exe

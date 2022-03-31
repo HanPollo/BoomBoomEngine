@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\build",
+    "\\Libraries",
+    "\\Libraries\\glad",
     "\\source"
   ],
-  "SelectedNode": "\\build",
   "PreviewInSolutionExplorer": false
 }

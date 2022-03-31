@@ -9,9 +9,10 @@ cmake_path(GET CMAKE_SOURCE_DIR PARENT_PATH REPO_DIR)
 add_executable(main "main.cpp" "console_print.cpp" "console_print.h")
 set_property(TARGET main PROPERTY CXX_STANDARD 20)
 target_link_libraries(main PRIVATE
-    "${REPO_DIR}/Libraries/lib/glad.lib"
-    "${REPO_DIR}/Libraries/lib/glfw3.lib"
+    "${REPO_DIR}/Libraries/glad/build/Release/glad.lib"
+    "${REPO_DIR}/Libraries/glfw/build/src/Release/glfw3.lib"
 )
 target_include_directories(main PRIVATE
-    "${REPO_DIR}/Libraries/include"
+    "${REPO_DIR}/Libraries/glad/include"
+    "${REPO_DIR}/Libraries/glfw/include"
 )
