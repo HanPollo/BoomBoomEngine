@@ -1,3 +1,0 @@
-C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/build/CMakeFiles/main.dir
-C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/build/CMakeFiles/ZERO_CHECK.dir

@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\build",
     "\\source"
   ],
-  "SelectedNode": "\\build",
+  "SelectedNode": "\\.gitmodules",
   "PreviewInSolutionExplorer": false
 }
