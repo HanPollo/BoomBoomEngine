@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ultimate frisbee
+* source:	https://sketchfab.com/3d-models/ultimate-frisbee-4c799485ff4f4a4586f6cc6eb2fb50f3
+* author:	Alena Trushina (https://sketchfab.com/Alena_Trushina)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ultimate frisbee" (https://sketchfab.com/3d-models/ultimate-frisbee-4c799485ff4f4a4586f6cc6eb2fb50f3) by Alena Trushina (https://sketchfab.com/Alena_Trushina) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

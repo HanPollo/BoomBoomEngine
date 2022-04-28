@@ -1,0 +1,11 @@
+Model Information:
+* title:	TRON Disc speed sculpt
+* source:	https://sketchfab.com/3d-models/tron-disc-speed-sculpt-495605732f1f4f19843478a179b16709
+* author:	wright42 (https://sketchfab.com/wright42)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "TRON Disc speed sculpt" (https://sketchfab.com/3d-models/tron-disc-speed-sculpt-495605732f1f4f19843478a179b16709) by wright42 (https://sketchfab.com/wright42) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

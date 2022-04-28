@@ -12,7 +12,9 @@ set(SYSTEM_FILES
         source/System/VBO.cpp
         source/System/EBO.cpp
         source/System/VAO.cpp
-        source/System/texture.cpp source/System/Camera.cpp)
+        source/System/texture.cpp
+        source/System/Camera.cpp
+        source/System/Mesh.cpp source/System/Model.cpp source/System/shape.cpp source/System/basic_shapes.cpp)
 
 
 set(SOURCE_FILES
@@ -24,7 +26,7 @@ set(SOURCE_FILES
         source/stb.cpp)
 set(CONSOLE_PRINT
         source/console_print.cpp
-        source/console_print.h Headers/System/texture.h)
+        source/console_print.h)
 
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -40,6 +42,8 @@ include_directories(3rdParty/glad/include)
 include_directories(3rdParty/glfw/include)
 
 include_directories(3rdParty/stb)
+
+include_directories(3rdParty/json)
 
 include_directories(Headers/Entities)
 include_directories(Headers/Components)
