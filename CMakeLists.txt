@@ -12,7 +12,7 @@ set(SYSTEM_FILES
         source/System/VBO.cpp
         source/System/EBO.cpp
         source/System/VAO.cpp
-        source/System/texture.cpp)
+        source/System/texture.cpp source/System/Camera.cpp)
 
 
 set(SOURCE_FILES
