@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\build",
     "\\Libraries",
     "\\Libraries\\glad",
     "\\source"
   ],
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }
