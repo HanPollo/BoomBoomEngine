@@ -9,7 +9,10 @@ set(COMPONENT_FILES
         )
 set(SYSTEM_FILES
         source/System/shaderClass.cpp
-        source/System/VBO.cpp source/System/EBO.cpp source/System/VAO.cpp)
+        source/System/VBO.cpp
+        source/System/EBO.cpp
+        source/System/VAO.cpp
+        source/System/texture.cpp)
 
 
 set(SOURCE_FILES
@@ -18,10 +21,10 @@ set(SOURCE_FILES
         ${ENTITY_FILES}
         ${COMPONENT_FILES}
         ${SYSTEM_FILES}
-        )
+        source/stb.cpp)
 set(CONSOLE_PRINT
         source/console_print.cpp
-        source/console_print.h)
+        source/console_print.h Headers/System/texture.h)
 
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -30,20 +33,13 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(3rdParty/glfw)
 
-#[[
-# BGFX
-set(BGFX_BUILD_EXAMPLES OFF CACHE BOOL "")
-set(BGFX_INSTALL OFF CACHE BOOL "")
-set(BGFX_INSTALL_EXAMPLES OFF CACHE BOOL "")
-set(BGFX_AMALGAMATED ON CACHE BOOL "")
-set(BX_AMALGAMATED ON CACHE BOOL "")
-
-add_subdirectory(3rdParty/bgfx.cmake)
-]]
-
+# GLM
+include_directories(3rdParty/glm)
 
 include_directories(3rdParty/glad/include)
 include_directories(3rdParty/glfw/include)
+
+include_directories(3rdParty/stb)
 
 include_directories(Headers/Entities)
 include_directories(Headers/Components)
@@ -52,5 +48,6 @@ include_directories(Headers/System)
 add_executable(main source/main.cpp ${CONSOLE_PRINT} ${SOURCE_FILES})
 
 target_link_libraries(main glfw)
+
 set_property(TARGET main PROPERTY CXX_STANDARD 20)
 

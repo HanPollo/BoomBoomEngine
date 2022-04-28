@@ -52,51 +52,65 @@ build cmake_object_order_depends_target_main: phony || cmake_object_order_depend
 build CMakeFiles/main.dir/source/main.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/main.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\main.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source
 
 build CMakeFiles/main.dir/source/console_print.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/console_print.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\console_print.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source
 
 build CMakeFiles/main.dir/3rdParty/glad/src/glad.c.obj: C_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/3rdParty/glad/src/glad.c || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\3rdParty\glad\src\glad.c.obj.d
   FLAGS = -g
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\3rdParty\glad\src
 
 build CMakeFiles/main.dir/source/System/shaderClass.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/System/shaderClass.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\System\shaderClass.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source\System
 
 build CMakeFiles/main.dir/source/System/VBO.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/System/VBO.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\System\VBO.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source\System
 
 build CMakeFiles/main.dir/source/System/EBO.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/System/EBO.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\System\EBO.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source\System
 
 build CMakeFiles/main.dir/source/System/VAO.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/System/VAO.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\source\System\VAO.cpp.obj.d
   FLAGS = -g -std=gnu++20
-  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
   OBJECT_DIR = CMakeFiles\main.dir
   OBJECT_FILE_DIR = CMakeFiles\main.dir\source\System
+
+build CMakeFiles/main.dir/source/System/texture.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/System/texture.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles\main.dir\source\System\texture.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  OBJECT_DIR = CMakeFiles\main.dir
+  OBJECT_FILE_DIR = CMakeFiles\main.dir\source\System
+
+build CMakeFiles/main.dir/source/stb.cpp.obj: CXX_COMPILER__main_Debug C$:/Users/pollo/OneDrive/Documentos/U/Arqui$ Motores$ de$ Juego/BoomBoomEngine/source/stb.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles\main.dir\source\stb.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  INCLUDES = -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glm" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glad/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/glfw/include" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/3rdParty/stb" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Entities" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/Components" -I"C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/Headers/System"
+  OBJECT_DIR = CMakeFiles\main.dir
+  OBJECT_FILE_DIR = CMakeFiles\main.dir\source
 
 
 # =============================================================================
@@ -106,7 +120,7 @@ build CMakeFiles/main.dir/source/System/VAO.cpp.obj: CXX_COMPILER__main_Debug C$
 #############################################
 # Link the executable main.exe
 
-build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/source/main.cpp.obj CMakeFiles/main.dir/source/console_print.cpp.obj CMakeFiles/main.dir/3rdParty/glad/src/glad.c.obj CMakeFiles/main.dir/source/System/shaderClass.cpp.obj CMakeFiles/main.dir/source/System/VBO.cpp.obj CMakeFiles/main.dir/source/System/EBO.cpp.obj CMakeFiles/main.dir/source/System/VAO.cpp.obj | 3rdParty/glfw/src/libglfw3.a || 3rdParty/glfw/src/libglfw3.a
+build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/source/main.cpp.obj CMakeFiles/main.dir/source/console_print.cpp.obj CMakeFiles/main.dir/3rdParty/glad/src/glad.c.obj CMakeFiles/main.dir/source/System/shaderClass.cpp.obj CMakeFiles/main.dir/source/System/VBO.cpp.obj CMakeFiles/main.dir/source/System/EBO.cpp.obj CMakeFiles/main.dir/source/System/VAO.cpp.obj CMakeFiles/main.dir/source/System/texture.cpp.obj CMakeFiles/main.dir/source/stb.cpp.obj | 3rdParty/glfw/src/libglfw3.a || 3rdParty/glfw/src/libglfw3.a
   FLAGS = -g
   LINK_LIBRARIES = 3rdParty/glfw/src/libglfw3.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\main.dir

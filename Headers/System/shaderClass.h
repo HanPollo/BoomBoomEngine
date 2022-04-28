@@ -25,6 +25,10 @@ class Shader{
         void Activate();
         // Deletes the Shader Program
         void Delete();
+
+    private:
+        // Checks if the different Shaders have compiled properly
+        void compileErrors(unsigned int shader, const char* type);
 };
 
 #endif //BOOMBOOMENGINE_SHADERCLASS_H
