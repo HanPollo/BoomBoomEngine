@@ -8,6 +8,7 @@ set(BOOM_BOOM_HEADERS
         System/VBO.h
         Components/component.h
         Entities/Note.h
+        Stage/stage.h
         )
 set(BOOM_BOOM_SOURCES
         System/BasicMesh.cpp
@@ -18,6 +19,7 @@ set(BOOM_BOOM_SOURCES
         System/VAO.cpp
         System/VBO.cpp
         Components/component.cpp
+        Stage/stage.cpp
         )
 add_library(BoomEngine STATIC ${BOOM_BOOM_SOURCES} ${BOOM_BOOM_HEADERS} System/system.h ${Shaders})
 if (MSVC)

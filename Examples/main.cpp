@@ -10,6 +10,7 @@
 #include "System/shaderClass.h"
 #include "System/camera.h"
 #include "System/Model.h"
+#include "Stage/stage.h"
 
 #include <iostream>
 
@@ -88,7 +89,7 @@ int main()
     // -----------
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
     Model note(bb::getPath("Resources/Models/disc/scene.gltf").string());
-
+    Skybox stage;
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -137,6 +138,8 @@ int main()
         //model2 = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
         ourShader.setMat4("model", model2);
         note.Draw(ourShader);
+
+        stage.Draw(view, projection);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
