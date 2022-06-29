@@ -18,7 +18,8 @@ enum Camera_Movement {
     FORWARD,
     BACKWARD,
     LEFT,
-    RIGHT
+    RIGHT,
+    FIX
 };
 
 // Default camera values
@@ -37,6 +38,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+    bool FIXED;
     // euler Angles
     float Yaw;
     float Pitch;

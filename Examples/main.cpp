@@ -10,6 +10,7 @@
 #include "System/shaderClass.h"
 #include "System/camera.h"
 #include "System/Model.h"
+#include "Entities/Cursor.h"
 #include "Stage/stage.h"
 
 #include <iostream>
@@ -88,8 +89,9 @@ int main()
     // load models
     // -----------
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
-    Model note(bb::getPath("Resources/Models/disc/scene.gltf").string());
+    Model note(bb::getPath("Resources/Models/Cursor/cursor.obj").string());
     Skybox stage;
+    Cursor cursor(ourShader);
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -130,7 +132,8 @@ int main()
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
         ourShader.setMat4("model", model);
         guitar.Draw(ourShader);
-
+        
+       
         glm::mat4 model2 = glm::mat4(1.0f);
         model2 = glm::translate(model2, glm::vec3(0.05f, -0.1f, 0.5f)); // translate it down so it's at the center of the scene
         model2 = glm::scale(model2, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
@@ -138,6 +141,8 @@ int main()
         //model2 = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
         ourShader.setMat4("model", model2);
         note.Draw(ourShader);
+      
+        //cursor.Draw();
 
         stage.Draw(view, projection);
 
@@ -160,7 +165,8 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
+    if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+        camera.ProcessKeyboard(FIX, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
