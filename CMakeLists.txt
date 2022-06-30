@@ -17,9 +17,9 @@ set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gla
 set(BOOM_BOOM_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source")
 
 if(MSVC)
-    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ${BULLET_LIBRARIES} assimp stb )
+    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} OpenAL dr_wav assimp stb OpenMeshCore)
 else()
-    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ${BULLET_LIBRARIES} stdc++fs assimp stb )
+    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} stdc++fs OpenAL dr_wav assimp stb OpenMeshCore)
 endif(MSVC)
 
 configure_file(CMakeConfigFiles/root_directory.h.in "${CMAKE_SOURCE_DIR}/source/root_directory.h")

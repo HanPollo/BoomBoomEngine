@@ -6,6 +6,7 @@ set(BOOM_BOOM_HEADERS
         System/shaderClass.h
         System/VAO.h
         System/VBO.h
+        System/Window.h
         Components/component.h
         Entities/Note.h
         Entities/Cursor.h
@@ -19,6 +20,7 @@ set(BOOM_BOOM_SOURCES
         System/shaderClass.cpp
         System/VAO.cpp
         System/VBO.cpp
+        #System/Window.cpp
         Components/component.cpp
         Entities/Cursor.cpp
         Stage/stage.cpp

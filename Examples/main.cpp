@@ -32,6 +32,7 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -59,6 +60,7 @@ int main()
         glfwTerminate();
         return -1;
     }
+    //glfwSetKeyCallback(window, key_callback);
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -89,9 +91,8 @@ int main()
     // load models
     // -----------
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
-    Model note(bb::getPath("Resources/Models/Cursor/cursor.obj").string());
     Skybox stage;
-    Cursor cursor(ourShader);
+    Cursor cursor;
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -109,6 +110,7 @@ int main()
         // input
         // -----
         processInput(window);
+        cursor.ProcessInput(window);
 
         // render
         // ------
@@ -133,16 +135,10 @@ int main()
         ourShader.setMat4("model", model);
         guitar.Draw(ourShader);
         
-       
-        glm::mat4 model2 = glm::mat4(1.0f);
-        model2 = glm::translate(model2, glm::vec3(0.05f, -0.1f, 0.5f)); // translate it down so it's at the center of the scene
-        model2 = glm::scale(model2, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
-        model2 = glm::rotate(model2, glm::radians(-90.0f), glm::vec3(0, 1, 0));
-        //model2 = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
-        ourShader.setMat4("model", model2);
-        note.Draw(ourShader);
-      
-        //cursor.Draw();
+
+        ourShader.setMat4("model", cursor.transform_model);
+        cursor.UpdateCursor();
+        cursor.Draw(ourShader);
 
         stage.Draw(view, projection);
 
@@ -166,15 +162,16 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-        camera.ProcessKeyboard(FIX, deltaTime);
+        camera.ProcessKeyboard(cam::FIX, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
+        camera.ProcessKeyboard(cam::FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
+        camera.ProcessKeyboard(cam::BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
+        camera.ProcessKeyboard(cam::LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+        camera.ProcessKeyboard(cam::RIGHT, deltaTime);
+
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -215,4 +212,5 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+
 
