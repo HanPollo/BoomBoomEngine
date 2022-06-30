@@ -8,4 +8,3 @@ function(MakeExample TARGETNAME FILENAME)
 endfunction(MakeExample)
 
 MakeExample(main main.cpp)
-MakeExample(ecs ecs_example.cpp)

@@ -23,8 +23,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 900;
+const unsigned int SCR_HEIGHT = 700;
 
 // camera
 Camera camera(glm::vec3(0.05f, 1.0f, 3.0f));
@@ -77,6 +77,9 @@ int main()
         return -1;
     }
 
+    //Load Song
+    Song song;
+
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     //stbi_set_flip_vertically_on_load(true);
 
@@ -93,6 +96,7 @@ int main()
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
     Skybox stage;
     Cursor cursor;
+    Note note(1, 0.5f, bb::getPath("Resources/Models/note1/note.obj").string());
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -110,7 +114,7 @@ int main()
         // input
         // -----
         processInput(window);
-        cursor.ProcessInput(window);
+        cursor.ProcessInput(window, song);
 
         // render
         // ------
@@ -139,8 +143,11 @@ int main()
         ourShader.setMat4("model", cursor.transform_model);
         cursor.UpdateCursor();
         cursor.Draw(ourShader);
-
+        song.DrawNotes(ourShader);
         stage.Draw(view, projection);
+
+        ourShader.setMat4("model", note.model);
+        //note.Draw(ourShader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

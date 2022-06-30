@@ -1,5 +1,5 @@
-#ifndef BOOMBOOMENGINE_NOTE_H
-#define BOOMBOOMENGINE_NOTE_H
+#ifndef BOOMBOOMENGINE_CURSOR_H
+#define BOOMBOOMENGINE_CURSOR_H
 
 #include "glad/glad.h"
 
@@ -9,6 +9,7 @@
 
 #include "../System/BasicMesh.h"
 #include "../System/Model.h"
+#include "../System/Song.h"
 #include "../System/shaderClass.h"
 #include "../root_directory.h"
 namespace bb = BoomBoom;
@@ -41,6 +42,7 @@ public:
 
     int note_buffer_left = 0; //A buffer to create discrete movemente when cursor changes notes.
     int note_buffer_right = 0;
+    int create_note_buffer = 0;
     glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
     glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
     glm::vec3 right_vector = glm::vec3(2.0f, 0.0f, 0.0f);
@@ -52,14 +54,13 @@ public:
 
     void UpdateCursor();
     void ProcessKeyboard(Cursor_Movement direction);
-    void ProcessInput(GLFWwindow* window);
-
-    //void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void ProcessInput(GLFWwindow* window, Song& song);
+    //void SaveSong(Song song);
+    void createNote(Song& song);
 
 private:
 
-    //glm::mat4 transform_model = glm::mat4(1.0f);
 
     
 };
-#endif //BOOMBOOMENGINE_NOTE_H
+#endif //BOOMBOOMENGINE_CURSOR_H

@@ -7,6 +7,7 @@ set(BOOM_BOOM_HEADERS
         System/VAO.h
         System/VBO.h
         System/Window.h
+        System/Song.h
         Components/component.h
         Entities/Note.h
         Entities/Cursor.h
@@ -20,9 +21,11 @@ set(BOOM_BOOM_SOURCES
         System/shaderClass.cpp
         System/VAO.cpp
         System/VBO.cpp
+        System/Song.cpp
         #System/Window.cpp
         Components/component.cpp
         Entities/Cursor.cpp
+        Entities/Note.cpp
         Stage/stage.cpp
         )
 add_library(BoomEngine STATIC ${BOOM_BOOM_SOURCES} ${BOOM_BOOM_HEADERS} System/system.h ${Shaders})

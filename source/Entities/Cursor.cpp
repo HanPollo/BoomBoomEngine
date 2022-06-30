@@ -1,10 +1,9 @@
 #include "Cursor.h"
-#include "../System/Model.h"
 
 const string& PATH = bb::getPath("Resources/Models/Cursor/cursor.obj").string();
 
 Cursor::Cursor() : Model(PATH)
-{
+{   
     transform_model = glm::translate(transform_model, glm::vec3(0.05f, -0.1f, 0.5f)); // translate it down so it's at the center of the scene
     transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
 }
@@ -54,7 +53,7 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
         
 }
 
-void Cursor::ProcessInput(GLFWwindow* window)
+void Cursor::ProcessInput(GLFWwindow* window, Song& song)
 {
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         ProcessKeyboard(FORWARD);
@@ -68,4 +67,37 @@ void Cursor::ProcessInput(GLFWwindow* window)
         note_buffer_left = 0;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE)
         note_buffer_right = 0;
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        if (!create_note_buffer) {
+            create_note_buffer = 1;
+            cout << "Creating Note" << endl;
+            createNote(song);
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+        create_note_buffer = 0;
+}
+
+void Cursor::createNote(Song& song) {
+    string path = "";
+    if (note == 1) {
+        path = "Resources/Models/note1/note.obj";
+    }
+    else if (note == 2) {
+        path = "Resources/Models/note2/note.obj";
+    }
+    else if (note == 3) {
+        path = "Resources/Models/note3/note.obj";
+    }
+    else if (note == 4) {
+        path = "Resources/Models/note4/note.obj";
+    }
+    else{
+        path = "Resources/Models/note5/note.obj";
+    }
+    Note new_note(note, beat, bb::getPath(path).string());
+    Note* note_ptr = &new_note;
+    song.addNote(note_ptr);
+    
 }
