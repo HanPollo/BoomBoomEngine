@@ -147,7 +147,7 @@ int main()
         stage.Draw(view, projection);
 
         ourShader.setMat4("model", note.model);
-        //note.Draw(ourShader);
+        note.Draw(ourShader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

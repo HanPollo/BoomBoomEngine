@@ -1,32 +1,56 @@
 /**
- * OpenAL cross platform audio library
+ * This file is part of the OpenAL Soft cross platform audio library
+ *
  * Copyright (C) 2013 by Anis A. Hireche
- * This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Library General Public
- *  License as published by the Free Software Foundation; either
- *  version 2 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Library General Public License for more details.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * You should have received a copy of the GNU Library General Public
- *  License along with this library; if not, write to the
- *  Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- * Or go to http://www.gnu.org/copyleft/lgpl.html
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of Spherical-Harmonic-Transform nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "config.h"
 
+#include <array>
 #include <cstdlib>
+#include <iterator>
+#include <utility>
 
-#include "al/auxeffectslot.h"
-#include "alcmain.h"
-#include "alcontext.h"
-#include "alu.h"
-#include "vecmat.h"
+#include "alc/effects/base.h"
+#include "almalloc.h"
+#include "alnumeric.h"
+#include "alspan.h"
+#include "core/ambidefs.h"
+#include "core/bufferline.h"
+#include "core/devformat.h"
+#include "core/device.h"
+#include "core/effectslot.h"
+#include "core/mixer.h"
+#include "core/mixer/defs.h"
+#include "intrusive_ptr.h"
+
+struct ContextBase;
 
 
 namespace {
@@ -40,7 +64,7 @@ namespace {
 
 struct CompressorState final : public EffectState {
     /* Effect gains for each channel */
-    float mGain[MAX_AMBI_CHANNELS][MAX_OUTPUT_CHANNELS]{};
+    float mGain[MaxAmbiChannels][MAX_OUTPUT_CHANNELS]{};
 
     /* Effect parameters */
     bool mEnabled{true};
@@ -49,14 +73,16 @@ struct CompressorState final : public EffectState {
     float mEnvFollower{1.0f};
 
 
-    void deviceUpdate(const ALCdevice *device) override;
-    void update(const ALCcontext *context, const ALeffectslot *slot, const EffectProps *props, const EffectTarget target) override;
-    void process(const size_t samplesToDo, const al::span<const FloatBufferLine> samplesIn, const al::span<FloatBufferLine> samplesOut) override;
+    void deviceUpdate(const DeviceBase *device, const Buffer &buffer) override;
+    void update(const ContextBase *context, const EffectSlot *slot, const EffectProps *props,
+        const EffectTarget target) override;
+    void process(const size_t samplesToDo, const al::span<const FloatBufferLine> samplesIn,
+        const al::span<FloatBufferLine> samplesOut) override;
 
     DEF_NEWDEL(CompressorState)
 };
 
-void CompressorState::deviceUpdate(const ALCdevice *device)
+void CompressorState::deviceUpdate(const DeviceBase *device, const Buffer&)
 {
     /* Number of samples to do a full attack and release (non-integer sample
      * counts are okay).
@@ -71,17 +97,19 @@ void CompressorState::deviceUpdate(const ALCdevice *device)
     mReleaseMult = std::pow(AMP_ENVELOPE_MIN/AMP_ENVELOPE_MAX, 1.0f/releaseCount);
 }
 
-void CompressorState::update(const ALCcontext*, const ALeffectslot *slot, const EffectProps *props, const EffectTarget target)
+void CompressorState::update(const ContextBase*, const EffectSlot *slot,
+    const EffectProps *props, const EffectTarget target)
 {
     mEnabled = props->Compressor.OnOff;
 
     mOutTarget = target.Main->Buffer;
-    auto set_gains = [slot,target](auto &gains, al::span<const float,MAX_AMBI_CHANNELS> coeffs)
-    { ComputePanGains(target.Main, coeffs.data(), slot->Params.Gain, gains); };
+    auto set_gains = [slot,target](auto &gains, al::span<const float,MaxAmbiChannels> coeffs)
+    { ComputePanGains(target.Main, coeffs.data(), slot->Gain, gains); };
     SetAmbiPanIdentity(std::begin(mGain), slot->Wet.Buffer.size(), set_gains);
 }
 
-void CompressorState::process(const size_t samplesToDo, const al::span<const FloatBufferLine> samplesIn, const al::span<FloatBufferLine> samplesOut)
+void CompressorState::process(const size_t samplesToDo,
+    const al::span<const FloatBufferLine> samplesIn, const al::span<FloatBufferLine> samplesOut)
 {
     for(size_t base{0u};base < samplesToDo;)
     {
@@ -137,7 +165,7 @@ void CompressorState::process(const size_t samplesToDo, const al::span<const Flo
             for(FloatBufferLine &output : samplesOut)
             {
                 const float gain{*(outgains++)};
-                if(!(std::fabs(gain) > GAIN_SILENCE_THRESHOLD))
+                if(!(std::fabs(gain) > GainSilenceThreshold))
                     continue;
 
                 for(size_t i{0u};i < td;i++)
@@ -150,69 +178,10 @@ void CompressorState::process(const size_t samplesToDo, const al::span<const Flo
 }
 
 
-void Compressor_setParami(EffectProps *props, ALenum param, int val)
-{
-    switch(param)
-    {
-    case AL_COMPRESSOR_ONOFF:
-        if(!(val >= AL_COMPRESSOR_MIN_ONOFF && val <= AL_COMPRESSOR_MAX_ONOFF))
-            throw effect_exception{AL_INVALID_VALUE, "Compressor state out of range"};
-        props->Compressor.OnOff = (val != AL_FALSE);
-        break;
-
-    default:
-        throw effect_exception{AL_INVALID_ENUM, "Invalid compressor integer property 0x%04x",
-            param};
-    }
-}
-void Compressor_setParamiv(EffectProps *props, ALenum param, const int *vals)
-{ Compressor_setParami(props, param, vals[0]); }
-void Compressor_setParamf(EffectProps*, ALenum param, float)
-{ throw effect_exception{AL_INVALID_ENUM, "Invalid compressor float property 0x%04x", param}; }
-void Compressor_setParamfv(EffectProps*, ALenum param, const float*)
-{
-    throw effect_exception{AL_INVALID_ENUM, "Invalid compressor float-vector property 0x%04x",
-        param};
-}
-
-void Compressor_getParami(const EffectProps *props, ALenum param, int *val)
-{ 
-    switch(param)
-    {
-    case AL_COMPRESSOR_ONOFF:
-        *val = props->Compressor.OnOff;
-        break;
-
-    default:
-        throw effect_exception{AL_INVALID_ENUM, "Invalid compressor integer property 0x%04x",
-            param};
-    }
-}
-void Compressor_getParamiv(const EffectProps *props, ALenum param, int *vals)
-{ Compressor_getParami(props, param, vals); }
-void Compressor_getParamf(const EffectProps*, ALenum param, float*)
-{ throw effect_exception{AL_INVALID_ENUM, "Invalid compressor float property 0x%04x", param}; }
-void Compressor_getParamfv(const EffectProps*, ALenum param, float*)
-{
-    throw effect_exception{AL_INVALID_ENUM, "Invalid compressor float-vector property 0x%04x",
-        param};
-}
-
-DEFINE_ALEFFECT_VTABLE(Compressor);
-
-
 struct CompressorStateFactory final : public EffectStateFactory {
-    EffectState *create() override { return new CompressorState{}; }
-    EffectProps getDefaultProps() const noexcept override;
-    const EffectVtable *getEffectVtable() const noexcept override { return &Compressor_vtable; }
+    al::intrusive_ptr<EffectState> create() override
+    { return al::intrusive_ptr<EffectState>{new CompressorState{}}; }
 };
-
-EffectProps CompressorStateFactory::getDefaultProps() const noexcept
-{
-    EffectProps props{};
-    props.Compressor.OnOff = AL_COMPRESSOR_DEFAULT_ONOFF;
-    return props;
-}
 
 } // namespace
 

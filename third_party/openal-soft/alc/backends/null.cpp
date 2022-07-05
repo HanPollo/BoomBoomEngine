@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include "backends/null.h"
+#include "null.h"
 
 #include <exception>
 #include <atomic>
@@ -30,11 +30,9 @@
 #include <functional>
 #include <thread>
 
-#include "alcmain.h"
-#include "alexcpt.h"
+#include "core/device.h"
 #include "almalloc.h"
-#include "alu.h"
-#include "logging.h"
+#include "core/helpers.h"
 #include "threads.h"
 
 
@@ -44,15 +42,15 @@ using std::chrono::seconds;
 using std::chrono::milliseconds;
 using std::chrono::nanoseconds;
 
-constexpr ALCchar nullDevice[] = "No Output";
+constexpr char nullDevice[] = "No Output";
 
 
 struct NullBackend final : public BackendBase {
-    NullBackend(ALCdevice *device) noexcept : BackendBase{device} { }
+    NullBackend(DeviceBase *device) noexcept : BackendBase{device} { }
 
     int mixerProc();
 
-    void open(const ALCchar *name) override;
+    void open(const char *name) override;
     bool reset() override;
     void start() override;
     void stop() override;
@@ -107,12 +105,13 @@ int NullBackend::mixerProc()
 }
 
 
-void NullBackend::open(const ALCchar *name)
+void NullBackend::open(const char *name)
 {
     if(!name)
         name = nullDevice;
     else if(strcmp(name, nullDevice) != 0)
-        throw al::backend_exception{ALC_INVALID_VALUE, "Device name \"%s\" not found", name};
+        throw al::backend_exception{al::backend_error::NoDevice, "Device name \"%s\" not found",
+            name};
 
     mDevice->DeviceName = name;
 }
@@ -130,8 +129,8 @@ void NullBackend::start()
         mThread = std::thread{std::mem_fn(&NullBackend::mixerProc), this};
     }
     catch(std::exception& e) {
-        throw al::backend_exception{ALC_INVALID_DEVICE, "Failed to start mixing thread: %s",
-            e.what()};
+        throw al::backend_exception{al::backend_error::DeviceError,
+            "Failed to start mixing thread: %s", e.what()};
     }
 }
 
@@ -166,7 +165,7 @@ std::string NullBackendFactory::probe(BackendType type)
     return outnames;
 }
 
-BackendPtr NullBackendFactory::createBackend(ALCdevice *device, BackendType type)
+BackendPtr NullBackendFactory::createBackend(DeviceBase *device, BackendType type)
 {
     if(type == BackendType::Playback)
         return BackendPtr{new NullBackend{device}};

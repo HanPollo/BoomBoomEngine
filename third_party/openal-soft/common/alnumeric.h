@@ -1,6 +1,8 @@
 #ifndef AL_NUMERIC_H
 #define AL_NUMERIC_H
 
+#include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #ifdef HAVE_INTRIN_H
@@ -67,6 +69,19 @@ constexpr inline size_t clampz(size_t val, size_t min, size_t max) noexcept
 { return minz(max, maxz(min, val)); }
 
 
+constexpr inline float lerpf(float val1, float val2, float mu) noexcept
+{ return val1 + (val2-val1)*mu; }
+constexpr inline float cubic(float val1, float val2, float val3, float val4, float mu) noexcept
+{
+    const float mu2{mu*mu}, mu3{mu2*mu};
+    const float a0{-0.5f*mu3 +       mu2 + -0.5f*mu};
+    const float a1{ 1.5f*mu3 + -2.5f*mu2            + 1.0f};
+    const float a2{-1.5f*mu3 +  2.0f*mu2 +  0.5f*mu};
+    const float a3{ 0.5f*mu3 + -0.5f*mu2};
+    return val1*a0 + val2*a1 + val3*a2 + val4*a3;
+}
+
+
 /** Find the next power-of-2 for non-power-of-2 numbers. */
 inline uint32_t NextPowerOf2(uint32_t value) noexcept
 {
@@ -88,112 +103,6 @@ inline size_t RoundUp(size_t value, size_t r) noexcept
     value += r-1;
     return value - (value%r);
 }
-
-
-/* Define CTZ macros (count trailing zeros), and POPCNT macros (population
- * count/count 1 bits), for 32- and 64-bit integers. The CTZ macros' results
- * are *UNDEFINED* if the value is 0.
- */
-#ifdef __GNUC__
-
-namespace detail_ {
-
-template<typename T>
-constexpr inline auto popcnt64(T val) = delete;
-template<>
-constexpr inline auto popcnt64(unsigned long long val) { return __builtin_popcountll(val); }
-template<>
-constexpr inline auto popcnt64(unsigned long val) { return __builtin_popcountl(val); }
-
-template<typename T>
-constexpr inline auto ctz64(T val) = delete;
-template<>
-constexpr inline auto ctz64(unsigned long long val) { return __builtin_ctzll(val); }
-template<>
-constexpr inline auto ctz64(unsigned long val) { return __builtin_ctzl(val); }
-
-} // namespace detail_
-
-#define POPCNT32 __builtin_popcount
-#define CTZ32 __builtin_ctz
-#define POPCNT64 detail_::popcnt64<uint64_t>
-#define CTZ64 detail_::ctz64<uint64_t>
-
-#else
-
-/* There be black magics here. The popcnt method is derived from
- * https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
- * while the ctz-utilizing-popcnt algorithm is shown here
- * http://www.hackersdelight.org/hdcodetxt/ntz.c.txt
- * as the ntz2 variant. These likely aren't the most efficient methods, but
- * they're good enough if the GCC built-ins aren't available.
- */
-inline int fallback_popcnt32(uint32_t v)
-{
-    v = v - ((v >> 1) & 0x55555555u);
-    v = (v & 0x33333333u) + ((v >> 2) & 0x33333333u);
-    v = (v + (v >> 4)) & 0x0f0f0f0fu;
-    return (int)((v * 0x01010101u) >> 24);
-}
-#define POPCNT32 fallback_popcnt32
-inline int fallback_popcnt64(uint64_t v)
-{
-    v = v - ((v >> 1) & 0x5555555555555555_u64);
-    v = (v & 0x3333333333333333_u64) + ((v >> 2) & 0x3333333333333333_u64);
-    v = (v + (v >> 4)) & 0x0f0f0f0f0f0f0f0f_u64;
-    return (int)((v * 0x0101010101010101_u64) >> 56);
-}
-#define POPCNT64 fallback_popcnt64
-
-#if defined(_WIN64)
-
-inline int msvc64_ctz32(uint32_t v)
-{
-    unsigned long idx = 32;
-    _BitScanForward(&idx, v);
-    return (int)idx;
-}
-#define CTZ32 msvc64_ctz32
-inline int msvc64_ctz64(uint64_t v)
-{
-    unsigned long idx = 64;
-    _BitScanForward64(&idx, v);
-    return (int)idx;
-}
-#define CTZ64 msvc64_ctz64
-
-#elif defined(_WIN32)
-
-inline int msvc_ctz32(uint32_t v)
-{
-    unsigned long idx = 32;
-    _BitScanForward(&idx, v);
-    return (int)idx;
-}
-#define CTZ32 msvc_ctz32
-inline int msvc_ctz64(uint64_t v)
-{
-    unsigned long idx = 64;
-    if(!_BitScanForward(&idx, (uint32_t)(v&0xffffffff)))
-    {
-        if(_BitScanForward(&idx, (uint32_t)(v>>32)))
-            idx += 32;
-    }
-    return (int)idx;
-}
-#define CTZ64 msvc_ctz64
-
-#else
-
-inline int fallback_ctz32(uint32_t value)
-{ return POPCNT32(~value & (value - 1)); }
-#define CTZ32 fallback_ctz32
-inline int fallback_ctz64(uint64_t value)
-{ return POPCNT64(~value & (value - 1)); }
-#define CTZ64 fallback_ctz64
-
-#endif
-#endif
 
 
 /**
@@ -240,7 +149,7 @@ inline int float2int(float f) noexcept
 
 #elif (defined(_MSC_VER) && defined(_M_IX86_FP) && _M_IX86_FP == 0) \
     || ((defined(__GNUC__) || defined(__clang__)) && (defined(__i386__) || defined(__x86_64__)) \
-        &&  !defined(__SSE_MATH__))
+        && !defined(__SSE_MATH__))
     int sign, shift, mant;
     union {
         float f;
@@ -276,7 +185,7 @@ inline int double2int(double d) noexcept
 
 #elif (defined(_MSC_VER) && defined(_M_IX86_FP) && _M_IX86_FP < 2) \
     || ((defined(__GNUC__) || defined(__clang__)) && (defined(__i386__) || defined(__x86_64__)) \
-        &&  !defined(__SSE2_MATH__))
+        && !defined(__SSE2_MATH__))
     int sign, shift;
     int64_t mant;
     union {
@@ -315,6 +224,12 @@ inline float fast_roundf(float f) noexcept
 
     float out;
     __asm__ __volatile__("frndint" : "=t"(out) : "0"(f));
+    return out;
+
+#elif (defined(__GNUC__) || defined(__clang__)) && defined(__aarch64__)
+
+    float out;
+    __asm__ volatile("frintx %s0, %s1" : "=w"(out) : "w"(f));
     return out;
 
 #else
@@ -356,6 +271,29 @@ inline float fast_roundf(float f) noexcept
     f += ilim[sign];
     return f - ilim[sign];
 #endif
+}
+
+
+template<typename T>
+constexpr const T& clamp(const T& value, const T& min_value, const T& max_value) noexcept
+{
+    return std::min(std::max(value, min_value), max_value);
+}
+
+// Converts level (mB) to gain.
+inline float level_mb_to_gain(float x)
+{
+    if(x <= -10'000.0f)
+        return 0.0f;
+    return std::pow(10.0f, x / 2'000.0f);
+}
+
+// Converts gain to level (mB).
+inline float gain_to_level_mb(float x)
+{
+    if (x <= 0.0f)
+        return -10'000.0f;
+    return maxf(std::log10(x) * 2'000.0f, -10'000.0f);
 }
 
 #endif /* AL_NUMERIC_H */
