@@ -11,13 +11,17 @@
 #include "System/camera.h"
 #include "System/Model.h"
 #include "Entities/Cursor.h"
+#include "Entities/Note.h"
 #include "Stage/stage.h"
+#include "System/Song.h"
+
 
 
 
 #include <iostream>
 #include <Audio/SoundDevice.h>
 #include <Audio/SoundLibrary.h>
+
 
 namespace bb = BoomBoom;
 
@@ -126,7 +130,7 @@ int main()
     object.addSound(sound1);
     object.Play();
 
-    Note note(1, 0.5f, bb::getPath("Resources/Models/note1/note.obj").string());
+    //song.addNote(cursor);
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -170,8 +174,9 @@ int main()
         ourShader.setMat4("model", model);
         guitar.Draw(ourShader);
         
-        object.Update();
+        //note.Update();
         cursor.Update();
+        
 
         //Audio
         sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
@@ -180,11 +185,9 @@ int main()
     
        
 
-        song.DrawNotes(ourShader);
+        song.DrawNotes();
         stage.Draw(view, projection);
 
-        ourShader.setMat4("model", note.model);
-        note.Draw(ourShader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

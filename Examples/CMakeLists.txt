@@ -14,5 +14,5 @@ endfunction(MakeExample)
 
 add_compile_definitions(AL_LIBTYPE_STATIC)
 MakeExample(main main.cpp)
-#MakeExample(audio audio-test.cpp)
-#MakeExample(ex_openal ex_openal.cpp)
+MakeExample(song loadSong.cpp)
+MakeExample(playSong playSong.cpp)

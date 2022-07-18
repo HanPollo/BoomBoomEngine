@@ -1,11 +1,9 @@
 #include "Cursor.h"
-#include "../Audio/SoundLibrary.h"
+#include "../System/Song.h"
 
 
 Cursor::Cursor() : GameObject()
 {   
-    Model cursor_model(bb::getPath("Resources/Models/cursor/cursor.obj").string());
-    setModel(cursor_model);
     transform_model = glm::translate(transform_model, glm::vec3(0.05f, -0.1f, 0.5f)); // translate it down so it's at the center of the scene
     transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
 }
@@ -38,11 +36,11 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
     float velocity = SPEED;
     if (direction == FORWARD) {
         translate_vector = forward_vector * velocity;
-        beat += forward_vector[2] * velocity;
+        beat = transform_model[3][2];
     }
     if (direction == BACKWARD) {
         translate_vector = backward_vector * velocity;
-        beat += backward_vector[2] * velocity;
+        beat = transform_model[3][2];
     }
     if (direction == LEFT) {
         if (!note_buffer_left && note != 1) {
@@ -50,6 +48,7 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
             translate_vector = left_vector;
             note--;
             note_buffer_left = 1;
+            cout << note << " " << transform_model[3][0] << " ";
         }
     }
     if (direction == RIGHT)
@@ -58,20 +57,23 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
             translate_vector = right_vector;
             note++;
             note_buffer_right = 1;
+            cout << note << " " << transform_model[3][0] << " ";
         }
         
 }
 
 void Cursor::ProcessInput(GLFWwindow* window, Song& song)
 {
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        song.SaveSong();
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         ProcessKeyboard(FORWARD);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        ProcessKeyboard(BACKWARD);  
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) 
+        ProcessKeyboard(BACKWARD);
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
         ProcessKeyboard(LEFT);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) 
-            ProcessKeyboard(RIGHT);
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        ProcessKeyboard(RIGHT);
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_RELEASE)
         note_buffer_left = 0;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE)
@@ -88,25 +90,8 @@ void Cursor::ProcessInput(GLFWwindow* window, Song& song)
         create_note_buffer = 0;
 }
 
+
 void Cursor::createNote(Song& song) {
-    string path = "";
-    if (note == 1) {
-        path = "Resources/Models/note1/note.obj";
-    }
-    else if (note == 2) {
-        path = "Resources/Models/note2/note.obj";
-    }
-    else if (note == 3) {
-        path = "Resources/Models/note3/note.obj";
-    }
-    else if (note == 4) {
-        path = "Resources/Models/note4/note.obj";
-    }
-    else{
-        path = "Resources/Models/note5/note.obj";
-    }
-    Note new_note(note, beat, bb::getPath(path).string());
-    Note* note_ptr = &new_note;
-    song.addNote(note_ptr);
-    
+    song.addNote(*this);
 }
+

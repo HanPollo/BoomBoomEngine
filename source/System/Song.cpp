@@ -1,33 +1,107 @@
 #include "Song.h"
+#include "../Entities/Cursor.h"
+#include "../Entities/Note.h"
+#include "direct.h"
 
 Song::Song()
 {
 	cout << "Created New Song" << endl;
 	name = "default";
+	Model note1(bb::getPath("Resources/Models/note1/note.obj").string());
+	Model note2(bb::getPath("Resources/Models/note2/note.obj").string());
+	Model note3(bb::getPath("Resources/Models/note3/note.obj").string());
+	Model note4(bb::getPath("Resources/Models/note4/note.obj").string());
+	Model note5(bb::getPath("Resources/Models/note5/note.obj").string());
+	models.push_back(note1);
+	models.push_back(note2);
+	models.push_back(note3);
+	models.push_back(note4);
+	models.push_back(note5);
 }
 
 Song::~Song()
 {
 }
 
-void Song::DrawNotes(Shader& shader)
+Song::Song(string name)
 {
+	cout << "Loaded Song" << endl;
+	this->name = name;
+	Model note1(bb::getPath("Resources/Models/note1/note.obj").string());
+	Model note2(bb::getPath("Resources/Models/note2/note.obj").string());
+	Model note3(bb::getPath("Resources/Models/note3/note.obj").string());
+	Model note4(bb::getPath("Resources/Models/note4/note.obj").string());
+	Model note5(bb::getPath("Resources/Models/note5/note.obj").string());
+	models.push_back(note1);
+	models.push_back(note2);
+	models.push_back(note3);
+	models.push_back(note4);
+	models.push_back(note5);
+	
+	song = SE_LOAD(bb::getPath("Songs/"+name+"/"+name+".wav").string().c_str());
+	SoundSource source;
+	Asource = &source;
+	
+	LoadSong();
+}
+
+
+void Song::DrawNotes()
+{
+	
 	if (notes.size() > 0) {
-		cout << "1" << endl;
-		for (int i = 0; i < sizeof(notes); i++) {
-			cout << "2" << endl;
-			shader.use();
-			cout << "3" << endl;
-			shader.setMat4("model", notes[i]->model);
-			cout << "4" << endl;
-			notes[i]->Draw(shader);
-			cout << "5" << endl;
+		for (int i = 0; i < notes.size(); i++) {
+			notes[i].Update();
 		}
 	}
 }
 
-void Song::addNote(Note* new_note)
+void Song::addNote(Cursor& cursor)
 {
+	Note new_note(cursor);
+	new_note.setModel(models[new_note.note-1]);
+	new_note.setShader(cursor.getShader());
 	notes.push_back(new_note);
+}
+
+void Song::setNoteShaders(Shader& shader)
+{
+	for (int i = 0; i < notes.size(); i++) {
+		notes[i].setShader(shader);
+	}
+}
+
+void Song::SaveSong()
+{
+	mkdir(bb::getPath("Songs/" + name).string().c_str());
+	ofstream File(bb::getPath("Songs/" + name + "/data.song").string());
+	File << notes.size() << endl;
+	for (int i = 0; i < notes.size(); i++) {
+		File << notes[i].note << " " << notes[i].beat << endl;
+	}
+
+}
+
+void Song::LoadSong()
+{
+	int size;
+	ifstream File(bb::getPath("Songs/" + name + "/data.song").string());
+	File >> size;
+	int n;
+	float b;
+	while (File >> n >> b) {
+		Note new_note(n, b);
+		new_note.setModel(models[new_note.note - 1]);
+		notes.push_back(new_note);
+	}
+
+
+
+}
+
+void Song::Play()
+{
+	if(!Asource->isPlaying())
+		Asource->Play(song);
 }
 

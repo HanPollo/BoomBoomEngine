@@ -1,3 +1,4 @@
+#pragma once
 #include "Model.h"
 #include "../Audio/SoundSource.h"
 
@@ -17,6 +18,8 @@ public:
 
 	void setModel(Model& model);
 	void setShader(Shader& shader);
+
+	Shader& getShader();
 
 	void positionObject(float x, float y, float z);
 	void Draw();

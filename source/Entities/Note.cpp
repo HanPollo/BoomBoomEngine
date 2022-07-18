@@ -1,34 +1,21 @@
 #include "Note.h"
 
-Note::Note(int note, float beat, const string& path) : Model(path) {
+Note::Note(Cursor& cursor) : GameObject() {
+	note = cursor.note;
+	beat = cursor.beat;
+	float note_pos = -0.15f + (note-1)*0.1f;
+	transform_model = glm::translate(transform_model, glm::vec3(note_pos, -0.1f, beat));
+	transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));	
+}
+Note::Note(int note, float beat) : GameObject() {
 	this->note = note;
 	this->beat = beat;
-	if (note == 1) {
-		position = glm::vec3(-3.95f, -0.1f, beat);
-	}
-	else if (note == 2) {
-		position = glm::vec3(-1.95f, -0.1f, beat);
-	}
-	else if (note == 3) {
-		position = glm::vec3(0.05f, -0.1f, beat);
-	}
-	else if (note == 4) {
-		position = glm::vec3(2.05f, -0.1f, beat);
-	}
-	else if (note == 5) {
-		position = glm::vec3(4.05f, -0.1f, beat);
-	}
-	cout << position[0] << endl;
-	model = glm::translate(model, position);
-	model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
-	
+	float note_pos = -0.15f + (note - 1) * 0.1f;
+	transform_model = glm::translate(transform_model, glm::vec3(note_pos, -0.1f, beat));
+	transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));
 }
 
 Note::~Note()
 {
 }
 
-void Note::testDrawNote(Shader& shader)
-{
-	Draw(shader);
-}

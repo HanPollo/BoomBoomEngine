@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BOOMBOOMENGINE_CURSOR_H
 #define BOOMBOOMENGINE_CURSOR_H
 
@@ -13,6 +14,7 @@
 #include "../System/shaderClass.h"
 #include "../root_directory.h"
 #include "../System/GameObject.h"
+#include "../Audio/SoundLibrary.h"
 namespace bb = BoomBoom;
 
 #include <string>

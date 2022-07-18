@@ -17,6 +17,9 @@ void GameObject::setShader(Shader& shader)
 {
 	object_shader = &shader;
 }
+Shader& GameObject::getShader() {
+	return *object_shader;
+}
 
 
 void GameObject::Draw()

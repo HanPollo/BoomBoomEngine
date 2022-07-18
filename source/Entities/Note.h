@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BOOMBOOMENGINE_NOTE_H
 #define BOOMBOOMENGINE_NOTE_H
 
@@ -11,6 +12,8 @@
 #include "../System/Model.h"
 #include "../System/shaderClass.h"
 #include "../root_directory.h"
+#include "Cursor.h"
+#include "../System/GameObject.h"
 namespace bb = BoomBoom;
 
 #include <string>
@@ -23,10 +26,11 @@ namespace bb = BoomBoom;
 using namespace std;
 #endif //BOOMBOOMENGINE_NOTE_H
 
-class Note : public Model
+class Note : public GameObject
 {
 public:
-	Note(int note, float beat, const string& path);
+	Note(Cursor& cursor);
+	Note(int note, float beat);
 	~Note();
 
 	void testDrawNote(Shader& shader);
@@ -36,8 +40,7 @@ public:
 
 	glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
-	glm::vec3 right_vector = glm::vec3(2.0f, 0.0f, 0.0f);
-	glm::vec3 left_vector = glm::vec3(-2.0f, 0.0f, 0.0f);
+
 
 	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
