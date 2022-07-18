@@ -8,10 +8,16 @@ set(BOOM_BOOM_HEADERS
         System/VBO.h
         System/Window.h
         System/Song.h
+        System/GameObject.h
         Components/component.h
         Entities/Note.h
         Entities/Cursor.h
         Stage/stage.h
+        Audio/SoundDevice.h
+        Audio/SoundLibrary.h
+        Audio/SoundSource.h
+        Audio/OpenALErrorCheck.h
+        Audio/AudioManager.h
         )
 set(BOOM_BOOM_SOURCES
         System/BasicMesh.cpp
@@ -22,11 +28,16 @@ set(BOOM_BOOM_SOURCES
         System/VAO.cpp
         System/VBO.cpp
         System/Song.cpp
+        System/GameObject.cpp
         #System/Window.cpp
         Components/component.cpp
         Entities/Cursor.cpp
         Entities/Note.cpp
-        Stage/stage.cpp
+        Stage/stage.cpp 
+        Audio/SoundDevice.cpp
+        Audio/SoundLibrary.cpp
+        Audio/SoundSource.cpp
+        Audio/AudioManager.cpp
         )
 add_library(BoomEngine STATIC ${BOOM_BOOM_SOURCES} ${BOOM_BOOM_HEADERS} System/system.h ${Shaders})
 if (MSVC)

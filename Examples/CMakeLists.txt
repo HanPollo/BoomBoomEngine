@@ -4,7 +4,15 @@ function(MakeExample TARGETNAME FILENAME)
 	set_property(TARGET ${TARGETNAME} PROPERTY FOLDER Examples)
 	target_link_libraries(${TARGETNAME} PRIVATE BoomEngine)
 	target_include_directories(${TARGETNAME} PRIVATE ${BOOM_BOOM_INCLUDE_DIRECTORY} ${THIRD_PARTY_INCLUDE_DIRECTORIES})
+	add_custom_command(TARGET main POST_BUILD        
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+        $<TARGET_FILE:OpenAL> $<TARGET_FILE_DIR:main>)
+
+
 
 endfunction(MakeExample)
 
+add_compile_definitions(AL_LIBTYPE_STATIC)
 MakeExample(main main.cpp)
+#MakeExample(audio audio-test.cpp)
+#MakeExample(ex_openal ex_openal.cpp)

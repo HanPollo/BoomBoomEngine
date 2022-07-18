@@ -13,7 +13,11 @@
 #include "Entities/Cursor.h"
 #include "Stage/stage.h"
 
+
+
 #include <iostream>
+#include <Audio/SoundDevice.h>
+#include <Audio/SoundLibrary.h>
 
 namespace bb = BoomBoom;
 
@@ -32,6 +36,9 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+// OpenAL Device
+SoundDevice* sd = LISTENER->Get();
+//SoundLibrary* AudioLib = SoundLibrary::Get();
 
 // timing
 float deltaTime = 0.0f;
@@ -87,6 +94,16 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
+    //Audio
+    ALint attunation = AL_INVERSE_DISTANCE_CLAMPED;
+    sd->SetAttunation(attunation);
+    sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
+    sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
+    int sound1 = SE_LOAD(bb::getPath("Resources/Audio/SFX/Sound1_L.wav").string().c_str());
+    SoundSource source_1;
+    int sound2 = SE_LOAD(bb::getPath("Resources/Audio/SFX/CursorMove.wav").string().c_str());
+    SoundSource source_2;
+
     // build and compile shaders
     // -------------------------
     Shader ourShader(bb::getPath("Resources/Shaders/default.vs").string().c_str(), bb::getPath("Resources/Shaders/default.fs").string().c_str());
@@ -96,10 +113,24 @@ int main()
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
     Skybox stage;
     Cursor cursor;
+    Model cursor_model(bb::getPath("Resources/Models/Cursor/cursor.obj").string());
+    cursor.setModel(cursor_model);
+    cursor.setShader(ourShader);
+    cursor.addAudioSource(source_2);
+    cursor.addSound(sound2);
+    GameObject object;
+    Model object_model(bb::getPath("Resources/Models/note1/note.obj").string());
+    object.setModel(object_model);
+    object.setShader(ourShader);
+    object.addAudioSource(source_1);
+    object.addSound(sound1);
+    object.Play();
+
     Note note(1, 0.5f, bb::getPath("Resources/Models/note1/note.obj").string());
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 
     // render loop
     // -----------
@@ -139,10 +170,16 @@ int main()
         ourShader.setMat4("model", model);
         guitar.Draw(ourShader);
         
+        object.Update();
+        cursor.Update();
 
-        ourShader.setMat4("model", cursor.transform_model);
-        cursor.UpdateCursor();
-        cursor.Draw(ourShader);
+        //Audio
+        sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
+        sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
+
+    
+       
+
         song.DrawNotes(ourShader);
         stage.Draw(view, projection);
 

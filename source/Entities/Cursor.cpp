@@ -1,9 +1,11 @@
 #include "Cursor.h"
+#include "../Audio/SoundLibrary.h"
 
-const string& PATH = bb::getPath("Resources/Models/Cursor/cursor.obj").string();
 
-Cursor::Cursor() : Model(PATH)
+Cursor::Cursor() : GameObject()
 {   
+    Model cursor_model(bb::getPath("Resources/Models/cursor/cursor.obj").string());
+    setModel(cursor_model);
     transform_model = glm::translate(transform_model, glm::vec3(0.05f, -0.1f, 0.5f)); // translate it down so it's at the center of the scene
     transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
 }
@@ -12,17 +14,22 @@ Cursor::~Cursor()
 {
 }
 
-
-void Cursor::UpdateCursor()
+void Cursor::Update()
 {
     //transform_model = glm::translate(transform_model, glm::vec3(0.0f, 0.0f, 0.01f)*0.1f); // translate it down so it's at the center of the scene
     //transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
     //transform_model = glm::rotate(transform_model, glm::radians(-1.0f), glm::vec3(0, 1, 0));
     //model2 = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
-    transform_model = glm::translate(transform_model, transform_vector);
-    transform_vector = glm::vec3(0.0f, 0.0f, 0.0f);
+    transform_model = glm::translate(transform_model, translate_vector);
+    translate_vector = glm::vec3(0.0f, 0.0f, 0.0f);
+    position = glm::vec3(transform_model[3][0], transform_model[3][1], transform_model[3][2]);
+    if (HasAudioSource())
+        object_Asource->SetPosition(position[0], position[1], position[2]);
+
+    object_shader->setMat4("model", transform_model);
+    Draw();
     //note_buffer = 0;
-    
+
 }
 
 void Cursor::ProcessKeyboard(Cursor_Movement direction)
@@ -30,23 +37,25 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
     
     float velocity = SPEED;
     if (direction == FORWARD) {
-        transform_vector = forward_vector * velocity;
+        translate_vector = forward_vector * velocity;
         beat += forward_vector[2] * velocity;
     }
     if (direction == BACKWARD) {
-        transform_vector = backward_vector * velocity;
+        translate_vector = backward_vector * velocity;
         beat += backward_vector[2] * velocity;
     }
     if (direction == LEFT) {
         if (!note_buffer_left && note != 1) {
-            transform_vector = left_vector;
+            Play();
+            translate_vector = left_vector;
             note--;
             note_buffer_left = 1;
         }
     }
     if (direction == RIGHT)
         if (!note_buffer_right && note != 5) {
-            transform_vector = right_vector;
+            Play();
+            translate_vector = right_vector;
             note++;
             note_buffer_right = 1;
         }

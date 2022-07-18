@@ -12,6 +12,7 @@
 #include "../System/Song.h"
 #include "../System/shaderClass.h"
 #include "../root_directory.h"
+#include "../System/GameObject.h"
 namespace bb = BoomBoom;
 
 #include <string>
@@ -24,7 +25,7 @@ namespace bb = BoomBoom;
 using namespace std;
 
 
-class Cursor : public Model
+class Cursor : public GameObject
 {
     enum Cursor_Movement {
         FORWARD,
@@ -48,11 +49,8 @@ public:
     glm::vec3 right_vector = glm::vec3(2.0f, 0.0f, 0.0f);
     glm::vec3 left_vector = glm::vec3(-2.0f, 0.0f, 0.0f);
 
-    glm::vec3 transform_vector = glm::vec3(0.0f, 0.0f, 0.0f);
 
-    glm::mat4 transform_model = glm::mat4(1.0f);
-
-    void UpdateCursor();
+    void Update() override;
     void ProcessKeyboard(Cursor_Movement direction);
     void ProcessInput(GLFWwindow* window, Song& song);
     //void SaveSong(Song song);

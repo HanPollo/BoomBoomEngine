@@ -8,7 +8,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) {
     MovementSpeed = SPEED;
     MouseSensitivity = SENSITIVITY;
     Zoom = ZOOM;
-    FIXED = false;
+    FIXED = true;
 
     Position = position;
     WorldUp = up;
