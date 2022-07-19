@@ -1,53 +1,30 @@
-cmake_minimum_required(VERSION 3.20)
 set(CMAKE_LEGACY_CYGWIN_WIN32 OFF)
-project(boomBoomEngine C CXX)
+cmake_minimum_required(VERSION 3.15)
+project(BoomBoom C CXX)
+find_package(OpenGL REQUIRED)
+add_definitions(-D_USE_MATH_DEFINES)
+set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.3.2/include"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm-0.9.9.8"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui-1.78"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/openal-soft/include"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenMesh-8.1/src"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/dr_wav"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/assimp-5.0.1/include"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/AudioFile"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen-3.3.9"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/libsndfile/include"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/entt-v3.8.1/src")
+set(BOOM_BOOM_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source")
 
-# Set variables
-set(ENTITY_FILES
-        )
-set(COMPONENT_FILES
-        )
-set(SYSTEM_FILES
-        source/System/shaderClass.cpp
-        source/System/VBO.cpp
-        source/System/EBO.cpp
-        source/System/VAO.cpp
-        source/System/texture.cpp source/System/Camera.cpp)
+if(MSVC)
+    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} OpenAL dr_wav assimp stb OpenMeshCore sndfile AudioFile)
+else()
+    set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} stdc++fs OpenAL dr_wav assimp stb OpenMeshCore sndfile AudioFile)
+endif(MSVC)
 
-
-set(SOURCE_FILES
-        source/main.cpp
-        3rdParty/glad/src/glad.c
-        ${ENTITY_FILES}
-        ${COMPONENT_FILES}
-        ${SYSTEM_FILES}
-        source/stb.cpp)
-set(CONSOLE_PRINT
-        source/console_print.cpp
-        source/console_print.h Headers/System/texture.h)
-
-# GLFW
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
-add_subdirectory(3rdParty/glfw)
-
-# GLM
-include_directories(3rdParty/glm)
-
-include_directories(3rdParty/glad/include)
-include_directories(3rdParty/glfw/include)
-
-include_directories(3rdParty/stb)
-
-include_directories(Headers/Entities)
-include_directories(Headers/Components)
-include_directories(Headers/System)
-
-add_executable(main source/main.cpp ${CONSOLE_PRINT} ${SOURCE_FILES})
-
-target_link_libraries(main glfw)
-
-set_property(TARGET main PROPERTY CXX_STANDARD 20)
-
+configure_file(CMakeConfigFiles/root_directory.h.in "${CMAKE_SOURCE_DIR}/source/root_directory.h")
+add_subdirectory(third_party)
+add_subdirectory(source)
+add_subdirectory(Examples)

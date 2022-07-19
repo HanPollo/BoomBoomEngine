@@ -4,30 +4,27 @@ Game engine for rythm based games.
 # Description
 A WIP for a game engine to create Rhythm based games.
 
-
 # Compilation
-Once downloaded go to main repo file (BoomBoomEngine folder) and in terminal enter the following commands:
+clone the hito-4 branch to desired folder:
 ```
-git submodule update --init --recursive //This is to get the glfw lib
+git clone --single-branch --branch hito-4 https://github.com/HanPollo/BoomBoomEngine.git
+```
+Once downloaded open BoomBoomEngine folder with Visual Studio or with a terminal that suports cmake commands
 
-cd Libraries/glad
+1- Go to BoomBoomEngine folder in terminal (that supports mkdir and cmake commands, preferably Visual Studio's Developer PowerShell as it is done in demo)
+
+2- Write the following code:
+```
 mkdir build
 cd build
 cmake ..
-cmake --build . --config Release
+cmake --build .  //Or alternatevily Open BoomBoomEngine/build/BoomBoom.sln with Visual Studio and build all solutions
+```
+This will throw some errors which can be ignored since they are for the next iteration's Audio Engine (not implemented yet).
+This will also build all 3rd party Libraries which are used.
 
-cd ../../glfw
-mkdir build
-cd build
-cmake ..
-cmake --build . --config Release  
-
-cd ../../..
-mkdir build
-cd build
-cmake ../source
-cmake --build .  //Open sln
-cd debug
+Back in terminal make sure you are on BoomBoomEngine/build and run the following code to see demo:
+```
+cd Examples/Debug
 ./main.exe
-
 ```

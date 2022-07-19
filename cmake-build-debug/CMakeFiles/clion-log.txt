@@ -1,5 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2022.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2022.1/bin/ninja/win/ninja.exe" -G Ninja -S "C:\Users\pollo\OneDrive\Documentos\U\Arqui Motores de Juego\BoomBoomEngine" -B "C:\Users\pollo\OneDrive\Documentos\U\Arqui Motores de Juego\BoomBoomEngine\cmake-build-debug"
--- Including Win32 support
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/pollo/OneDrive/Documentos/U/Arqui Motores de Juego/BoomBoomEngine/cmake-build-debug
