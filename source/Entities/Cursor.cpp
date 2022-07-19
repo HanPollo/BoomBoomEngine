@@ -41,6 +41,7 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
     if (direction == BACKWARD) {
         translate_vector = backward_vector * velocity;
         beat = transform_model[3][2];
+        cout << beat << " ";
     }
     if (direction == LEFT) {
         if (!note_buffer_left && note != 1) {

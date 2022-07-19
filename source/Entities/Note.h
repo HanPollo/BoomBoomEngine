@@ -35,16 +35,14 @@ public:
 
 	void testDrawNote(Shader& shader);
 
+	const float SPEED = 0.1f;
 	int note;
 	float beat;
 
 	glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
 
-
-	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-
-	glm::mat4 model = glm::mat4(1.0f);
+	void Advance();
 
 
 };

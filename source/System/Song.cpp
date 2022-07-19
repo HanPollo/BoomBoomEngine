@@ -101,7 +101,9 @@ void Song::LoadSong()
 
 void Song::Play()
 {
-	if(!Asource->isPlaying())
-		Asource->Play(song);
+
+	for (int i = 0; i < notes.size(); i++) {
+		notes[i].Advance();
+	}
 }
 

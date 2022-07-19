@@ -170,7 +170,7 @@ int main()
         song.DrawNotes();
         stage.Draw(view, projection);
 
-
+        song.Play();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

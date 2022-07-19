@@ -131,7 +131,6 @@ int main()
     object.addAudioSource(source_1);
     object.addSound(sound1);
     //object.Play();
-    song_source.Play(ID_song);
     //song.Play();
 
     //song.addNote(cursor);

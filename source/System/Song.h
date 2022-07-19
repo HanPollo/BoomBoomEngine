@@ -40,5 +40,6 @@ public:
 	void SaveSong();
 	void LoadSong();
 
+	//void PlaySong();
 	void Play();
 };

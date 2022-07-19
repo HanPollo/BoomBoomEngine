@@ -19,3 +19,13 @@ Note::~Note()
 {
 }
 
+void Note::Advance()
+{
+	if (beat < 3.0f) {
+		translate_vector = backward_vector * SPEED;
+		beat = transform_model[3][2];
+	}
+	else
+		translate_vector = glm::vec3(0.0f, 0.0f, 0.0f);
+
+}
