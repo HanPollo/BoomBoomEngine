@@ -7,7 +7,7 @@ A WIP for a game engine to create Rhythm based games.
 # Compilation
 clone the hito-4 branch to desired folder:
 ```
-git clone --single-branch --branch hito-4 https://github.com/HanPollo/BoomBoomEngine.git
+git clone https://github.com/HanPollo/BoomBoomEngine.git
 ```
 Once downloaded open BoomBoomEngine folder with Visual Studio or with a terminal that suports cmake commands
 
@@ -23,8 +23,11 @@ cmake --build .  //Or alternatevily Open BoomBoomEngine/build/BoomBoom.sln with 
 This will throw some errors which can be ignored since they are for the next iteration's Audio Engine (not implemented yet).
 This will also build all 3rd party Libraries which are used.
 
-Back in terminal make sure you are on BoomBoomEngine/build and run the following code to see demo:
+Back in terminal make sure you are on BoomBoomEngine/build and run the following code to get to engine demo:
 ```
 cd Examples/Debug
 ./main.exe
 ```
+Create notes where the cursor is with space and save the song with Q.
+Then you can reload the song and continue editing with loadSong.exe which is in the same directory as main.exe.
+You can also play the song in playSong.exe in the same directory.
