@@ -12,6 +12,8 @@ set(BOOM_BOOM_HEADERS
         Components/component.h
         Entities/Note.h
         Entities/Cursor.h
+        Entities/ControllerNote.h
+        Entities/Controller.h
         Stage/stage.h
         Audio/SoundDevice.h
         Audio/SoundLibrary.h
@@ -33,6 +35,8 @@ set(BOOM_BOOM_SOURCES
         Components/component.cpp
         Entities/Cursor.cpp
         Entities/Note.cpp
+        Entities/ControllerNote.cpp
+        Entities/Controller.cpp
         Stage/stage.cpp 
         Audio/SoundDevice.cpp
         Audio/SoundLibrary.cpp

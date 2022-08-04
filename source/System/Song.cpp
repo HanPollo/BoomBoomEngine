@@ -17,6 +17,7 @@ Song::Song()
 	models.push_back(note3);
 	models.push_back(note4);
 	models.push_back(note5);
+
 }
 
 Song::~Song()
@@ -37,6 +38,7 @@ Song::Song(string name)
 	models.push_back(note3);
 	models.push_back(note4);
 	models.push_back(note5);
+
 	
 	song = SE_LOAD(bb::getPath("Songs/"+name+"/"+name+".wav").string().c_str());
 	SoundSource source;
@@ -55,6 +57,7 @@ void Song::DrawNotes()
 		}
 	}
 }
+
 
 void Song::addNote(Cursor& cursor)
 {
@@ -101,7 +104,6 @@ void Song::LoadSong()
 
 void Song::Play()
 {
-
 	for (int i = 0; i < notes.size(); i++) {
 		notes[i].Advance();
 	}

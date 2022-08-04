@@ -24,7 +24,7 @@ namespace bb = BoomBoom;
 #include <vector>
 #include <GLFW/glfw3.h>
 using namespace std;
-#endif //BOOMBOOMENGINE_NOTE_H
+
 
 class Note : public GameObject
 {
@@ -46,3 +46,4 @@ public:
 
 
 };
+#endif //BOOMBOOMENGINE_NOTE_H

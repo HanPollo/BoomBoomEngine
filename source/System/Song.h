@@ -31,7 +31,6 @@ public:
 	vector<Model> models;
 	SoundSource* Asource = nullptr;
 
-
 	int song;
 	void DrawNotes();
 	void addNote(Cursor& cursor);

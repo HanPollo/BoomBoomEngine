@@ -211,7 +211,7 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
         camera.ProcessKeyboard(cam::FIX, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(cam::FORWARD, deltaTime);

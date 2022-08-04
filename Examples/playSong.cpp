@@ -14,6 +14,7 @@
 #include "Entities/Note.h"
 #include "Stage/stage.h"
 #include "System/Song.h"
+#include "Entities/Controller.h"
 
 
 
@@ -21,6 +22,7 @@
 #include <iostream>
 #include <Audio/SoundDevice.h>
 #include <Audio/SoundLibrary.h>
+
 
 
 namespace bb = BoomBoom;
@@ -90,7 +92,7 @@ int main()
 
     //Load Song
     Song song("default");
-
+    Controller controller;
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     //stbi_set_flip_vertically_on_load(true);
 
@@ -114,6 +116,7 @@ int main()
     // -------------------------
     Shader ourShader(bb::getPath("Resources/Shaders/default.vs").string().c_str(), bb::getPath("Resources/Shaders/default.fs").string().c_str());
     song.setNoteShaders(ourShader);
+    controller.setShader(ourShader);
     // load models
     // -----------
     Model guitar(bb::getPath("Resources/Models/guitar/scene.gltf").string());
@@ -125,6 +128,7 @@ int main()
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     song_source.Play(ID_song);
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -168,9 +172,11 @@ int main()
         sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
 
         song.DrawNotes();
+        controller.Update();
         stage.Draw(view, projection);
 
         song.Play();
+        controller.ProcessInput(window);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -190,7 +196,7 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
         camera.ProcessKeyboard(cam::FIX, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(cam::FORWARD, deltaTime);

@@ -41,7 +41,6 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
     if (direction == BACKWARD) {
         translate_vector = backward_vector * velocity;
         beat = transform_model[3][2];
-        cout << beat << " ";
     }
     if (direction == LEFT) {
         if (!note_buffer_left && note != 1) {
@@ -49,7 +48,6 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
             translate_vector = left_vector;
             note--;
             note_buffer_left = 1;
-            cout << note << " " << transform_model[3][0] << " ";
         }
     }
     if (direction == RIGHT)
@@ -58,7 +56,6 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
             translate_vector = right_vector;
             note++;
             note_buffer_right = 1;
-            cout << note << " " << transform_model[3][0] << " ";
         }
         
 }

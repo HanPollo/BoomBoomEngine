@@ -4,7 +4,7 @@ function(MakeExample TARGETNAME FILENAME)
 	set_property(TARGET ${TARGETNAME} PROPERTY FOLDER Examples)
 	target_link_libraries(${TARGETNAME} PRIVATE BoomEngine)
 	target_include_directories(${TARGETNAME} PRIVATE ${BOOM_BOOM_INCLUDE_DIRECTORY} ${THIRD_PARTY_INCLUDE_DIRECTORIES})
-	add_custom_command(TARGET main POST_BUILD        
+	add_custom_command(TARGET ${TARGETNAME} POST_BUILD        
 		COMMAND ${CMAKE_COMMAND} -E copy_if_different 
         $<TARGET_FILE:OpenAL> $<TARGET_FILE_DIR:main>)
 
