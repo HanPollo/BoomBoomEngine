@@ -1,3 +1,6 @@
 [submodule "glfw"]
 	path = Libraries/glfw
 	url = https://github.com/glfw/glfw/
+[submodule "third_party/MainLoop"]
+	path = third_party/MainLoop
+	url = https://github.com/mattearly/MainLoop
