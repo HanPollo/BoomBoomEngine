@@ -7,6 +7,10 @@ GameObject::GameObject()
 
 }
 
+GameObject::~GameObject()
+{
+}
+
 
 void GameObject::setModel(Model& model)
 {
@@ -25,7 +29,9 @@ Shader& GameObject::getShader() {
 void GameObject::Draw()
 {
 	if (object_model != nullptr && object_shader != nullptr) {
+		object_shader->setMat4("model", transform_model);
 		object_model->Draw(*object_shader);
+		ResetVectors();
 	}
 }
 
@@ -71,9 +77,8 @@ void GameObject::Update()
 	if(HasAudioSource())
 		object_Asource->SetPosition(position[0], position[1], position[2]);
 
-	object_shader->setMat4("model", transform_model);
-	Draw();
-	ResetVectors();
+	//object_shader->setMat4("model", transform_model);
+	//Draw();
 }
 
 void GameObject::Rotate(float angle, Axis axis)

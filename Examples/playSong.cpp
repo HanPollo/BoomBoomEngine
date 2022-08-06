@@ -171,8 +171,10 @@ int main()
         sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
         sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
 
+        song.UpdateNotes();
         song.DrawNotes();
         controller.Update();
+        controller.Draw();
         stage.Draw(view, projection);
 
         song.Play();

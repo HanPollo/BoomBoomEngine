@@ -1,5 +1,14 @@
 #include "Note.h"
 
+Note::Note() : GameObject()
+{
+	note = 3;
+	beat = 0.5f;
+	float note_pos = -0.15f + (note - 1) * 0.1f;
+	transform_model = glm::translate(transform_model, glm::vec3(note_pos, -0.1f, beat));
+	transform_model = glm::scale(transform_model, glm::vec3(0.05f, 0.05f, 0.05f));
+}
+
 Note::Note(Cursor& cursor) : GameObject() {
 	note = cursor.note;
 	beat = cursor.beat;
@@ -29,3 +38,5 @@ void Note::Advance()
 		translate_vector = glm::vec3(0.0f, 0.0f, 0.0f);
 
 }
+
+

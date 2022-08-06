@@ -53,6 +53,15 @@ void Song::DrawNotes()
 	
 	if (notes.size() > 0) {
 		for (int i = 0; i < notes.size(); i++) {
+			notes[i].Draw();
+		}
+	}
+}
+
+void Song::UpdateNotes()
+{
+	if (notes.size() > 0) {
+		for (int i = 0; i < notes.size(); i++) {
 			notes[i].Update();
 		}
 	}

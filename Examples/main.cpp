@@ -184,7 +184,7 @@ int main()
 
     
        
-
+        song.UpdateNotes();
         song.DrawNotes();
         stage.Draw(view, projection);
 

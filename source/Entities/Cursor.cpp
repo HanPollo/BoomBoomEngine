@@ -25,24 +25,24 @@ void Cursor::Update()
         object_Asource->SetPosition(position[0], position[1], position[2]);
 
     object_shader->setMat4("model", transform_model);
-    Draw();
+    //Draw();
     //note_buffer = 0;
 
 }
 
-void Cursor::ProcessKeyboard(Cursor_Movement direction)
+void Cursor::ProcessKeyboard(cur::Cursor_Movement direction)
 {
-    
+    madeChanges = true;
     float velocity = SPEED;
-    if (direction == FORWARD) {
+    if (direction == cur::FORWARD) {
         translate_vector = forward_vector * velocity;
         beat = transform_model[3][2];
     }
-    if (direction == BACKWARD) {
+    if (direction == cur::BACKWARD) {
         translate_vector = backward_vector * velocity;
         beat = transform_model[3][2];
     }
-    if (direction == LEFT) {
+    if (direction == cur::LEFT) {
         if (!note_buffer_left && note != 1) {
             Play();
             translate_vector = left_vector;
@@ -50,7 +50,7 @@ void Cursor::ProcessKeyboard(Cursor_Movement direction)
             note_buffer_left = 1;
         }
     }
-    if (direction == RIGHT)
+    if (direction == cur::RIGHT)
         if (!note_buffer_right && note != 5) {
             Play();
             translate_vector = right_vector;
@@ -65,13 +65,13 @@ void Cursor::ProcessInput(GLFWwindow* window, Song& song)
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         song.SaveSong();
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        ProcessKeyboard(FORWARD);
+        ProcessKeyboard(cur::FORWARD);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        ProcessKeyboard(BACKWARD);
+        ProcessKeyboard(cur::BACKWARD);
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        ProcessKeyboard(LEFT);
+        ProcessKeyboard(cur::LEFT);
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        ProcessKeyboard(RIGHT);
+        ProcessKeyboard(cur::RIGHT);
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_RELEASE)
         note_buffer_left = 0;
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE)
@@ -90,6 +90,7 @@ void Cursor::ProcessInput(GLFWwindow* window, Song& song)
 
 
 void Cursor::createNote(Song& song) {
+    madeChanges = true;
     song.addNote(*this);
 }
 

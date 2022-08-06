@@ -14,7 +14,7 @@ class GameObject
 	};
 public:
 	GameObject();
-	//~GameObject();
+	virtual ~GameObject();
 
 	void setModel(Model& model);
 	void setShader(Shader& shader);

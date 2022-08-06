@@ -33,6 +33,7 @@ public:
 
 	int song;
 	void DrawNotes();
+	void UpdateNotes();
 	void addNote(Cursor& cursor);
 	void setNoteShaders(Shader& shader);
 	

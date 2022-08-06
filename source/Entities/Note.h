@@ -29,11 +29,12 @@ using namespace std;
 class Note : public GameObject
 {
 public:
+	Note();
 	Note(Cursor& cursor);
 	Note(int note, float beat);
 	~Note();
 
-	void testDrawNote(Shader& shader);
+	//void testDrawNote(Shader& shader);
 
 	const float SPEED = 0.1f;
 	int note;
@@ -43,6 +44,7 @@ public:
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
 
 	void Advance();
+	//void Update() override;
 
 
 };

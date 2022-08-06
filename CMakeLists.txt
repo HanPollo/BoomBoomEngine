@@ -14,6 +14,7 @@ set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gla
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/AudioFile"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen-3.3.9"
+									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/MainLoop"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/libsndfile/include"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/entt-v3.8.1/src")
 set(BOOM_BOOM_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source")

@@ -6,13 +6,14 @@ function(MakeExample TARGETNAME FILENAME)
 	target_include_directories(${TARGETNAME} PRIVATE ${BOOM_BOOM_INCLUDE_DIRECTORY} ${THIRD_PARTY_INCLUDE_DIRECTORIES})
 	add_custom_command(TARGET ${TARGETNAME} POST_BUILD        
 		COMMAND ${CMAKE_COMMAND} -E copy_if_different 
-        $<TARGET_FILE:OpenAL> $<TARGET_FILE_DIR:main>)
+        $<TARGET_FILE:OpenAL> $<TARGET_FILE_DIR:${TARGETNAME}>)
 
 
 
 endfunction(MakeExample)
 
 add_compile_definitions(AL_LIBTYPE_STATIC)
-MakeExample(main main.cpp)
+#MakeExample(main main.cpp)
 MakeExample(song loadSong.cpp)
 MakeExample(playSong playSong.cpp)
+MakeExample(Boom_Boom engineTest.cpp)

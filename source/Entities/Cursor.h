@@ -26,20 +26,22 @@ namespace bb = BoomBoom;
 #include <GLFW/glfw3.h>
 using namespace std;
 
-
-class Cursor : public GameObject
-{
+namespace cur {
     enum Cursor_Movement {
         FORWARD,
         BACKWARD,
         LEFT,
         RIGHT
     };
+}
+class Cursor : public GameObject
+{
+    
 public:
     Cursor();
     ~Cursor();
 
-    const float SPEED = 0.1f;
+    const float SPEED = 5.0f;
     float beat = 0.5f; //Represents the beat the cursor is (Basically the Z axis).
     int note = 3;   //Represents the note the cursor is from 1 to 5.
 
@@ -50,10 +52,11 @@ public:
     glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
     glm::vec3 right_vector = glm::vec3(2.0f, 0.0f, 0.0f);
     glm::vec3 left_vector = glm::vec3(-2.0f, 0.0f, 0.0f);
+    bool madeChanges = false;
 
 
     void Update() override;
-    void ProcessKeyboard(Cursor_Movement direction);
+    void ProcessKeyboard(cur::Cursor_Movement direction);
     void ProcessInput(GLFWwindow* window, Song& song);
     //void SaveSong(Song song);
     void createNote(Song& song);

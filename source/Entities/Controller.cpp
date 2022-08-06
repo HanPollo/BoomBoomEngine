@@ -70,6 +70,6 @@ void Controller::Update()
 	for (int i = 0; i < noteQuantity; i++)
 	{
 		notes[i].Update();
-		notes[i].ResetVectors();
+		//notes[i].ResetVectors();
 	}
 }

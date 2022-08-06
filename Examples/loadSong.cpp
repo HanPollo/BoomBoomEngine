@@ -179,6 +179,7 @@ int main()
 
         //note.Update();
         cursor.Update();
+        cursor.Draw();
 
 
         //Audio
@@ -187,7 +188,7 @@ int main()
 
 
 
-
+        song.UpdateNotes();
         song.DrawNotes();
         stage.Draw(view, projection);
 

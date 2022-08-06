@@ -20,6 +20,8 @@ set(BOOM_BOOM_HEADERS
         Audio/SoundSource.h
         Audio/OpenALErrorCheck.h
         Audio/AudioManager.h
+        #Application.h
+        Engine.h
         )
 set(BOOM_BOOM_SOURCES
         System/BasicMesh.cpp
@@ -42,6 +44,7 @@ set(BOOM_BOOM_SOURCES
         Audio/SoundLibrary.cpp
         Audio/SoundSource.cpp
         Audio/AudioManager.cpp
+        #Application.cpp
         )
 add_library(BoomEngine STATIC ${BOOM_BOOM_SOURCES} ${BOOM_BOOM_HEADERS} System/system.h ${Shaders})
 if (MSVC)
