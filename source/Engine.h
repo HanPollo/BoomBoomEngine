@@ -99,14 +99,10 @@ namespace Engine {
                 camera.ProcessKeyboard(cam::RIGHT, deltaTime);
             if (key == GLFW_KEY_Q && action == GLFW_PRESS)
                 song->SaveSong();
-            if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+            if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) 
                 cursor->ProcessKeyboard(cur::FORWARD);
-                cout << "up:" << cursor->madeChanges << " ";
-            }
-            if (key == GLFW_KEY_DOWN && (action == GLFW_REPEAT || action == GLFW_PRESS)) {
-                cursor->ProcessKeyboard(cur::BACKWARD);
-                cout << "down:" << cursor->madeChanges << " ";
-            }
+            if (key == GLFW_KEY_DOWN && (action == GLFW_REPEAT || action == GLFW_PRESS)) 
+                cursor->ProcessKeyboard(cur::BACKWARD);           
             if (key == GLFW_KEY_LEFT && (action == GLFW_REPEAT || action == GLFW_PRESS))
                 cursor->ProcessKeyboard(cur::LEFT);
             if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
@@ -118,6 +114,7 @@ namespace Engine {
 
             if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
                 if (!cursor->create_note_buffer) {
+                    cursor->Update();
                     cursor->create_note_buffer = 1;
                     cout << "Creating Note" << endl;
                     cursor->createNote(*song);
@@ -316,9 +313,12 @@ namespace Engine {
                 ourShader->setMat4("projection", projection);
                 ourShader->setMat4("view", view);
 
+                ourShader->setMat4("model", guitar_model);
+                guitar->Draw(*ourShader);
                 //song->DrawNotes();
 
                 cursor->Draw();
+                song->DrawNotes();
                 
 
                 ourShader->setMat4("model", guitar_model);

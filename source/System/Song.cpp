@@ -12,11 +12,11 @@ Song::Song()
 	Model note3(bb::getPath("Resources/Models/note3/note.obj").string());
 	Model note4(bb::getPath("Resources/Models/note4/note.obj").string());
 	Model note5(bb::getPath("Resources/Models/note5/note.obj").string());
-	models.push_back(note1);
-	models.push_back(note2);
-	models.push_back(note3);
-	models.push_back(note4);
-	models.push_back(note5);
+	shared_models->push_back(note1);
+	shared_models->push_back(note2);
+	shared_models->push_back(note3);
+	shared_models->push_back(note4);
+	shared_models->push_back(note5);
 
 }
 
@@ -33,11 +33,11 @@ Song::Song(string name)
 	Model note3(bb::getPath("Resources/Models/note3/note.obj").string());
 	Model note4(bb::getPath("Resources/Models/note4/note.obj").string());
 	Model note5(bb::getPath("Resources/Models/note5/note.obj").string());
-	models.push_back(note1);
-	models.push_back(note2);
-	models.push_back(note3);
-	models.push_back(note4);
-	models.push_back(note5);
+	shared_models->push_back(note1);
+	shared_models->push_back(note2);
+	shared_models->push_back(note3);
+	shared_models->push_back(note4);
+	shared_models->push_back(note5);
 
 	
 	song = SE_LOAD(bb::getPath("Songs/"+name+"/"+name+".wav").string().c_str());
@@ -71,7 +71,7 @@ void Song::UpdateNotes()
 void Song::addNote(Cursor& cursor)
 {
 	Note new_note(cursor);
-	new_note.setModel(models[new_note.note-1]);
+	new_note.setModel(shared_models->at(new_note.note - 1));
 	new_note.setShader(cursor.getShader());
 	notes.push_back(new_note);
 }
@@ -103,7 +103,7 @@ void Song::LoadSong()
 	float b;
 	while (File >> n >> b) {
 		Note new_note(n, b);
-		new_note.setModel(models[new_note.note - 1]);
+		new_note.setModel(shared_models->at(new_note.note - 1));
 		notes.push_back(new_note);
 	}
 

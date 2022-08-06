@@ -29,6 +29,7 @@ public:
 	string name;
 	vector<Note> notes;
 	vector<Model> models;
+	shared_ptr<vector<Model>> shared_models = make_shared<vector<Model>>(move(models));
 	SoundSource* Asource = nullptr;
 
 	int song;
