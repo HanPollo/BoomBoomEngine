@@ -24,9 +24,11 @@ class Skybox
 {
 public:
     Skybox();
+    Skybox(string dir);
     ~Skybox();
 
     void Draw(const glm::mat4& view, const glm::mat4& projection);
+    string directory;
 
 private:
     unsigned int cubemapTexture;

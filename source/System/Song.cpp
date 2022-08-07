@@ -102,7 +102,7 @@ void Song::SaveSong(long long frames)
 {
 	mkdir(bb::getPath("Songs/" + name).string().c_str());
 	ofstream File(bb::getPath("Songs/" + name + "/data.song").string());
-	File << notes.size() << endl;
+	File << stage << endl << notes.size() << endl;
 	for (int i = 0; i < notes.size(); i++) {
 		File << notes[i].note << " " << (notes[i].beat - (frames*(notes[i].SPEED / 2000))) << endl;
 	}
@@ -112,8 +112,11 @@ void Song::SaveSong(long long frames)
 
 void Song::LoadSong()
 {
+	string stg;
 	int size;
 	ifstream File(bb::getPath("Songs/" + name + "/data.song").string());
+	getline(File, stg);
+	stage = stg;
 	File >> size;
 	int n;
 	float b;
@@ -125,6 +128,11 @@ void Song::LoadSong()
 
 
 
+}
+
+void Song::setStage(string name)
+{
+	stage = name;
 }
 
 void Song::Play(float dt)

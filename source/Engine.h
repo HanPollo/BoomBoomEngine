@@ -32,6 +32,7 @@ namespace Engine {
         PAUSE
     };
     //Engine Mode
+    string song_name;
     Mode mode = EDIT;
     bool firstMouse = true;
 
@@ -217,7 +218,11 @@ namespace Engine {
 
     void init()
     {
-        std::cout << "Welcome to Boom Boom Engine!\n" << "Here you can create Rhythm Games ;)\n";
+        cout << "Welcome to Boom Boom Engine!\n" << "Here you can create Rhythm Games ;)\n";
+        cout << "To create a new song create a folder with the song name in the Songs directory\n" << "Add the MONO .wav song with the same name to it \n";
+        cout << "To add stage background create a folder with the stage name in the Resources/Stage directory\n" << "Add the 6 sides of the skybox to it named posx, negx, posy, negy, posz, negz representing positive and negative in the axes. \n";
+        cout << endl << "Enter the name of the song: ";
+        cin >> song_name;
         // glfw: initialize and configure
         // ------------------------------
         glfwInit();
@@ -257,7 +262,7 @@ namespace Engine {
             //throw
         }
         //Song
-        Song aux_song("default");
+        Song aux_song(song_name);
         song = make_shared<Song>(aux_song);
 
         glEnable(GL_DEPTH_TEST);
@@ -282,7 +287,7 @@ namespace Engine {
         // load models
         Model rails(bb::getPath("Resources/Models/guitar/scene.gltf").string());
         guitar = make_shared<Model>(rails);
-        Skybox skybox;
+        Skybox skybox(song->stage);
         stage = make_shared<Skybox>(skybox);
         Cursor aux_cursor;
         cursor = make_shared<Cursor>(aux_cursor);

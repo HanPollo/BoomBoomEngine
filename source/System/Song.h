@@ -27,6 +27,7 @@ public:
 	Song(string name);
 
 	string name;
+	string stage = "Yokohama";
 	vector<Note> notes;
 	vector<Note*> playableNotes;
 	vector<Model> models;
@@ -46,6 +47,8 @@ public:
 	
 	void SaveSong(long long frames);
 	void LoadSong();
+
+	void setStage(string name);
 
 	//void PlaySong();
 	void Play(float dt);

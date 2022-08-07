@@ -56,15 +56,91 @@ Skybox::Skybox()
     glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    directory = "Yokohama";
 
     std::vector<std::string> faces
     {
-        bb::getPath("Resources/Stage/Yokohama/posx.jpg").string(),
-        bb::getPath("Resources/Stage/Yokohama/negx.jpg").string(),
-        bb::getPath("Resources/Stage/Yokohama/posy.jpg").string(),
-        bb::getPath("Resources/Stage/Yokohama/negy.jpg").string(),
-        bb::getPath("Resources/Stage/Yokohama/posz.jpg").string(),
-        bb::getPath("Resources/Stage/Yokohama/negz.jpg").string()
+        bb::getPath("Resources/Stage/"+ directory + "/posx.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negx.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/posy.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negy.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/posz.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negz.jpg").string()
+    };
+
+    cubemapTexture = loadCubemap(faces);
+
+    shader = new Shader(bb::getPath("Resources/Shaders/stage.vs").string().c_str(), bb::getPath("Resources/Shaders/stage.fs").string().c_str());
+
+    shader->use();
+    shader->setInt("skybox", 0);
+}
+
+Skybox::Skybox(string dir)
+{
+    GLfloat skyboxVertices[108] =
+    {
+        // positions          
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f
+    };
+
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    directory = dir;
+
+    std::vector<std::string> faces
+    {
+        bb::getPath("Resources/Stage/" + directory + "/posx.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negx.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/posy.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negy.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/posz.jpg").string(),
+        bb::getPath("Resources/Stage/" + directory + "/negz.jpg").string()
     };
 
     cubemapTexture = loadCubemap(faces);
@@ -111,7 +187,7 @@ GLuint Skybox::loadCubemap(std::vector<std::string> faces)
         }
         else
         {
-            printf("Stb can't load this sh*t: %s\n", faces[i].c_str());
+            printf("Stb can't load this: %s\n", faces[i].c_str());
             stbi_image_free(data);
         }
     }
