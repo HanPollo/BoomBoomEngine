@@ -28,10 +28,10 @@ Note::~Note()
 {
 }
 
-void Note::Advance()
+void Note::Advance(float dt)
 {
 	if (beat < 3.0f) {
-		translate_vector = backward_vector * SPEED;
+		translate_vector = backward_vector * dt * SPEED;
 		beat = transform_model[3][2];
 	}
 	else

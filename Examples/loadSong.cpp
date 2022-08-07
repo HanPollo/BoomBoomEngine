@@ -42,7 +42,7 @@ bool firstMouse = true;
 
 // OpenAL Device
 SoundDevice* sd = LISTENER->Get();
-//SoundLibrary* AudioLib = SoundLibrary::Get();
+SoundLibrary* AudioLib = SoundLibrary::Get();
 
 // timing
 float deltaTime = 0.0f;
@@ -103,11 +103,9 @@ int main()
     sd->SetAttunation(attunation);
     sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
     sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
-    int sound1 = SE_LOAD(bb::getPath("Resources/Audio/SFX/Sound1_L.wav").string().c_str());
-    SoundSource source_1;
-    int sound2 = SE_LOAD(bb::getPath("Resources/Audio/SFX/CursorMove.wav").string().c_str());
+    int sound2 = AudioLib->Load(bb::getPath("Resources/Audio/SFX/CursorMove.wav").string().c_str());
     SoundSource source_2;
-    int ID_song = SE_LOAD(bb::getPath("Songs/" + song.name + "/" + song.name + ".wav").string().c_str());
+    int ID_song = AudioLib->Load(bb::getPath("Songs/" + song.name + "/" + song.name + ".wav").string().c_str());
     SoundSource song_source;
 
     // build and compile shaders
@@ -124,12 +122,6 @@ int main()
     cursor.setShader(ourShader);
     cursor.addAudioSource(source_2);
     cursor.addSound(sound2);
-    GameObject object;
-    Model object_model(bb::getPath("Resources/Models/note1/note.obj").string());
-    object.setModel(object_model);
-    object.setShader(ourShader);
-    object.addAudioSource(source_1);
-    object.addSound(sound1);
     //object.Play();
     //song.Play();
 

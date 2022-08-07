@@ -177,7 +177,7 @@ int main()
         controller.Draw();
         stage.Draw(view, projection);
 
-        song.Play();
+        song.Play(deltaTime);
         controller.ProcessInput(window);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

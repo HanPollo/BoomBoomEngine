@@ -94,3 +94,8 @@ void Cursor::createNote(Song& song) {
     song.addNote(*this);
 }
 
+ALuint Cursor::getSourceID()
+{
+    return object_Asource->getSourceID();
+}
+

@@ -83,6 +83,16 @@ void Song::setNoteShaders(Shader& shader)
 	}
 }
 
+void Song::addScore(long long x)
+{
+	score += x;
+}
+
+void Song::substractScore(long long x)
+{
+	score -= x;
+}
+
 void Song::SaveSong()
 {
 	mkdir(bb::getPath("Songs/" + name).string().c_str());
@@ -111,10 +121,10 @@ void Song::LoadSong()
 
 }
 
-void Song::Play()
+void Song::Play(float dt)
 {
 	for (int i = 0; i < notes.size(); i++) {
-		notes[i].Advance();
+		notes[i].Advance(dt);
 	}
 }
 

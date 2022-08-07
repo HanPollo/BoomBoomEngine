@@ -1,6 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "../Audio/SoundSource.h"
+#include <list>
 
 
 
@@ -47,7 +48,7 @@ protected:
 
 	Model* object_model;
 	Shader* object_shader;
-	SoundSource* object_Asource = nullptr;
+	shared_ptr<SoundSource> object_Asource = nullptr;
 
 	glm::mat4 transform_model = glm::mat4(1.0f);
 
@@ -57,7 +58,7 @@ protected:
 	float rotate_angle = glm::radians(0.f);
 	glm::vec3 scale_vector = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	vector<int> sounds;
+	list<int> sounds;
 
 	float rot_speed = 1.f;
 	float move_speed = 1.f;

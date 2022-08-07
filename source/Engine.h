@@ -51,7 +51,8 @@ namespace Engine {
     shared_ptr<Song> song;
     //Cursor & Controller
     shared_ptr<Cursor> cursor;
-    //Controller controller;
+    
+    shared_ptr<Controller> controller;
     //Stage
     shared_ptr<Skybox> stage;
     shared_ptr<Model> guitar;
@@ -60,8 +61,10 @@ namespace Engine {
     //Audio
     //shared_ptr<SoundDevice> sd = make_shared<SoundDevice>(LISTENER->Get());
     SoundDevice* sd = LISTENER->Get();
-    vector<SoundSource> sound_sources;
+    SoundLibrary* AudioLib = SoundLibrary::Get();
     vector<int> sounds;
+    SoundSource cursor_source;
+    SoundSource main_source;
     int ID_Song;
 
     vector<Model> models;
@@ -79,10 +82,20 @@ namespace Engine {
         if (key == GLFW_KEY_F1 && action == GLFW_PRESS) {
             cout << "Edit Mode" << endl;
             mode = EDIT;
+            mapChange = true;
+            if (playedTime != 0)
+                main_source.Pause();
         }
         if (key == GLFW_KEY_F2 && action == GLFW_PRESS) {
-            cout << "Play Mode" << endl;
-            mode = PLAY;
+            if (mode != PLAY) {
+                cout << "Play Mode" << endl;
+                mode = PLAY;
+                mapChange = true;
+                if (playedTime == 0)
+                    main_source.Play(ID_Song);
+                else
+                    main_source.Resume();
+            }
         }
 
         if (mode == EDIT)
@@ -125,7 +138,21 @@ namespace Engine {
         }
         else if (mode == PLAY)
         {
-            cout << "Play Mode" << endl;
+            if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+                cout << "Pause" << endl;
+                mode = PAUSE;
+            }
+
+            if (key == GLFW_KEY_Z)
+                controller->ProcessKey(0, action);
+            if (key == GLFW_KEY_X)
+                controller->ProcessKey(1, action);
+            if (key == GLFW_KEY_C)
+                controller->ProcessKey(2, action);
+            if (key == GLFW_KEY_V)
+                controller->ProcessKey(3, action);
+            if (key == GLFW_KEY_B)
+                controller->ProcessKey(4, action);
         }
         else if (mode == PAUSE)
         {
@@ -224,13 +251,10 @@ namespace Engine {
         sd->SetLocation(camera.Position[0], camera.Position[1], camera.Position[2]);
         sd->SetOrientation(camera.Front[0], camera.Front[1], camera.Front[2], camera.Up[0], camera.Up[1], camera.Up[2]);
         //Cursor Sound
-        int sound2 = SE_LOAD(bb::getPath("Resources/Audio/SFX/CursorMove.wav").string().c_str());
-        sounds.push_back(sound2);
-        SoundSource source_2;
-        sound_sources.push_back(source_2);
+        int sound2 = AudioLib->Load(bb::getPath("Resources/Audio/SFX/CursorMove.wav").string().c_str());
+        
         //Song sound
-        int ID_song = SE_LOAD(bb::getPath("Songs/" + song->name + "/" + song->name + ".wav").string().c_str());
-        SoundSource song_source;
+        ID_Song = AudioLib->Load(bb::getPath("Songs/" + song->name + "/" + song->name + ".wav").string().c_str());
 
         // Create Shader
         Shader shader(bb::getPath("Resources/Shaders/default.vs").string().c_str(), bb::getPath("Resources/Shaders/default.fs").string().c_str());
@@ -245,13 +269,18 @@ namespace Engine {
         Cursor aux_cursor;
         cursor = make_shared<Cursor>(aux_cursor);
 
+        Controller aux_controller;
+        controller = make_shared<Controller>(aux_controller);
+
         Model cursor_model(bb::getPath("Resources/Models/Cursor/cursor.obj").string());
         models.push_back(cursor_model);
         cursor->setModel(models[0]);
         cursor->setShader(*ourShader);
-        //cursor->addAudioSource(sound_sources[0]);
-        //cursor->addSound(sounds[0]);
+        controller->setShader(*ourShader);
+        cursor->addAudioSource(cursor_source);
+        cursor->addSound(sound2);
         cursor->Update();
+
 
     }
     void processStage()
@@ -287,7 +316,14 @@ namespace Engine {
             }
             else if (mode == PLAY)
             {
-                cout << "Play Mode" << endl;
+                stopwatch = 0.f;
+                playedTime += dt;
+                mapChange = true;
+             
+                song->UpdateNotes();
+                song->Play(dt);
+                controller->Update();
+                
             }
             else if (mode == PAUSE)
             {
@@ -315,14 +351,10 @@ namespace Engine {
 
                 ourShader->setMat4("model", guitar_model);
                 guitar->Draw(*ourShader);
-                //song->DrawNotes();
 
                 cursor->Draw();
                 song->DrawNotes();
-                
-
-                ourShader->setMat4("model", guitar_model);
-                guitar->Draw(*ourShader);
+             
 
                 glfwSwapBuffers(window);
             }
@@ -330,11 +362,31 @@ namespace Engine {
         }
         else if (mode == PLAY)
         {
-            cout << "Play Mode" << endl;
+            if (mapChange) {
+                mapChange = false;
+                glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glEnable(GL_DEPTH_TEST);
+
+                stage->Draw(view, projection);
+
+                ourShader->use();
+                ourShader->setMat4("projection", projection);
+                ourShader->setMat4("view", view);
+
+                ourShader->setMat4("model", guitar_model);
+                guitar->Draw(*ourShader);
+
+                
+                song->DrawNotes();
+                controller->Draw();
+
+                glfwSwapBuffers(window);
+            }
+            glfwPollEvents();
         }
         else if (mode == PAUSE)
         {
-            cout << "Pause" << endl;
         }
     }
 

@@ -31,16 +31,20 @@ public:
 	vector<Model> models;
 	shared_ptr<vector<Model>> shared_models = make_shared<vector<Model>>(move(models));
 	SoundSource* Asource = nullptr;
+	long long score = 0;
 
 	int song;
 	void DrawNotes();
 	void UpdateNotes();
 	void addNote(Cursor& cursor);
 	void setNoteShaders(Shader& shader);
+
+	void addScore(long long x);
+	void substractScore(long long x);
 	
 	void SaveSong();
 	void LoadSong();
 
 	//void PlaySong();
-	void Play();
+	void Play(float dt);
 };

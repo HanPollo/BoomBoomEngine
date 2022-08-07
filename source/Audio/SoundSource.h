@@ -16,6 +16,7 @@ public:
 	void SetPosition(const float& x, const float& y, const float& z);
 
 	bool isPlaying();
+	ALuint getSourceID();
 
 private:
 	ALuint p_Source;

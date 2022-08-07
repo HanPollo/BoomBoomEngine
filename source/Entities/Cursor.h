@@ -60,6 +60,7 @@ public:
     void ProcessInput(GLFWwindow* window, Song& song);
     //void SaveSong(Song song);
     void createNote(Song& song);
+    ALuint getSourceID();
 
 private:
 

@@ -5,7 +5,7 @@ Controller::Controller()
 	for (int i = 0; i < noteQuantity; i++)
 	{
 		Model model(bb::getPath("Resources/Models/note"+ to_string(i+1)+"/note.obj").string());
-		models.push_back(model);
+		shared_models->push_back(model);
 		
 		ControllerNote note(i+1, 1.9f);
 		notes.push_back(note);
@@ -13,7 +13,7 @@ Controller::Controller()
 	}
 	for (int i = 0; i < noteQuantity; i++)
 	{
-		notes[i].setModel(models[i]);
+		notes[i].setModel(shared_models->at(i));
 	}
 	key_map.push_back(GLFW_KEY_Z);
 	key_map.push_back(GLFW_KEY_X);
@@ -63,6 +63,33 @@ void Controller::ProcessInput(GLFWwindow* window)
 		}
 	}
 }
+
+void Controller::ProcessKey(int note, int action)
+{
+	if (action == GLFW_PRESS) {
+		if (!notes[note].isPressed) {
+			notes[note].isPressed = true;
+			notes[note].Scale(0.8);
+		}
+	}
+	if (action == GLFW_RELEASE) {
+		if (notes[note].isPressed) {
+			notes[note].isPressed = false;
+			notes[note].Scale(1.25);
+		}
+	}
+}
+
+
+long long Controller::getScore()
+{
+	return score;
+}
+
+void Controller::updateScore(Song& song)
+{
+}
+
 
 
 void Controller::Update()

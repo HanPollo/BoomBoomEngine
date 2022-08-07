@@ -72,3 +72,8 @@ bool SoundSource::isPlaying()
 	alGetSourcei(p_Source, AL_SOURCE_STATE, &playState);
 	return (playState == AL_PLAYING);
 }
+
+ALuint SoundSource::getSourceID()
+{
+	return p_Source;
+}

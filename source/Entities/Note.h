@@ -36,14 +36,14 @@ public:
 
 	//void testDrawNote(Shader& shader);
 
-	const float SPEED = 0.1f;
+	const float SPEED = 50.0f;
 	int note;
 	float beat;
 
 	glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
 
-	void Advance();
+	void Advance(float dt);
 	//void Update() override;
 
 

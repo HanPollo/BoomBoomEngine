@@ -36,13 +36,20 @@ public:
 	int getKey(int noteNum);
 
 	void ProcessInput(GLFWwindow* window);
+	void ProcessKey(int note, int action);
+
+	long long getScore();
+	void updateScore(Song& song);
 
 	void Update();
+
 
 private:
 	int noteQuantity = 5;
 	vector<ControllerNote> notes;
 	vector<Model> models;
+	shared_ptr<vector<Model>> shared_models = make_shared<vector<Model>>(move(models));
 	vector<int> key_map;
+	long long score;
 
 };

@@ -37,7 +37,7 @@ void GameObject::Draw()
 
 void GameObject::addAudioSource(SoundSource& audio_source)
 {
-	object_Asource = &audio_source;
+	object_Asource = make_shared<SoundSource>(audio_source);
 	object_Asource->SetPosition(position[0], position[1], position[2]);
 }
 
