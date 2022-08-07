@@ -140,6 +140,7 @@ namespace Engine {
         {
             if (key == GLFW_KEY_P && action == GLFW_PRESS) {
                 cout << "Pause" << endl;
+                main_source.Pause();
                 mode = PAUSE;
             }
 
@@ -156,7 +157,11 @@ namespace Engine {
         }
         else if (mode == PAUSE)
         {
-            cout << "Pause" << endl;
+            if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+                cout << "Play" << endl;
+                main_source.Resume();
+                mode = PLAY;
+            }
         }
     }
     // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -320,14 +325,15 @@ namespace Engine {
                 playedTime += dt;
                 mapChange = true;
              
-                song->UpdateNotes();
                 song->Play(dt);
+                song->UpdateNotes();
+              
                 controller->Update();
                 
             }
             else if (mode == PAUSE)
             {
-                cout << "Pause" << endl;
+                stopwatch = 0.f;
             }
         }
 
@@ -387,6 +393,28 @@ namespace Engine {
         }
         else if (mode == PAUSE)
         {
+            if (mapChange) {
+                mapChange = false;
+                glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glEnable(GL_DEPTH_TEST);
+
+                stage->Draw(view, projection);
+
+                ourShader->use();
+                ourShader->setMat4("projection", projection);
+                ourShader->setMat4("view", view);
+
+                ourShader->setMat4("model", guitar_model);
+                guitar->Draw(*ourShader);
+
+
+                song->DrawNotes();
+                controller->Draw();
+
+                glfwSwapBuffers(window);
+            }
+            glfwPollEvents();
         }
     }
 
