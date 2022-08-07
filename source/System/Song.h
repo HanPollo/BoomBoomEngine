@@ -28,6 +28,7 @@ public:
 
 	string name;
 	vector<Note> notes;
+	vector<Note> playableNotes;
 	vector<Model> models;
 	shared_ptr<vector<Model>> shared_models = make_shared<vector<Model>>(move(models));
 	SoundSource* Asource = nullptr;
@@ -42,7 +43,7 @@ public:
 	void addScore(long long x);
 	void substractScore(long long x);
 	
-	void SaveSong();
+	void SaveSong(long long frames);
 	void LoadSong();
 
 	//void PlaySong();

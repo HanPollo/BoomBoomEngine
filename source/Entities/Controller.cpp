@@ -88,6 +88,21 @@ long long Controller::getScore()
 
 void Controller::updateScore(Song& song)
 {
+	song.addScore(score);
+}
+
+void Controller::PlayKeys(Song& song)
+{
+	for (int i = 0; i<song.playableNotes.size(); i++) {
+		if (song.playableNotes[i].beat > 1.975)
+			song.playableNotes.erase(song.playableNotes.begin() + i);
+		else {
+			if (notes[song.playableNotes[i].note - 1].isPressed) {
+				score += (100 - (abs(song.playableNotes[i].beat - 1.9) * 1000));
+				song.playableNotes.erase(song.playableNotes.begin() + i);
+			}
+		}
+	}
 }
 
 

@@ -63,7 +63,7 @@ void Cursor::ProcessKeyboard(cur::Cursor_Movement direction)
 void Cursor::ProcessInput(GLFWwindow* window, Song& song)
 {
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        song.SaveSong();
+        song.SaveSong(0.f);
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         ProcessKeyboard(cur::FORWARD);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)

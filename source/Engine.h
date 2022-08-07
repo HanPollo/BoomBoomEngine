@@ -72,6 +72,7 @@ namespace Engine {
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
     float playedTime = 0.0f;
+    long long playedFrames = 0;
 
     bool mapChange = true;
 
@@ -111,7 +112,7 @@ namespace Engine {
             if (key == GLFW_KEY_D && action == GLFW_PRESS)
                 camera.ProcessKeyboard(cam::RIGHT, deltaTime);
             if (key == GLFW_KEY_Q && action == GLFW_PRESS)
-                song->SaveSong();
+                song->SaveSong(playedFrames);
             if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) 
                 cursor->ProcessKeyboard(cur::FORWARD);
             if (key == GLFW_KEY_DOWN && (action == GLFW_REPEAT || action == GLFW_PRESS)) 
@@ -323,13 +324,13 @@ namespace Engine {
             {
                 stopwatch = 0.f;
                 playedTime += dt;
+                playedFrames ++;
                 mapChange = true;
              
                 song->Play(dt);
                 song->UpdateNotes();
               
                 controller->Update();
-                
             }
             else if (mode == PAUSE)
             {

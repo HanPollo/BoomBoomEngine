@@ -93,14 +93,15 @@ void Song::substractScore(long long x)
 	score -= x;
 }
 
-void Song::SaveSong()
+void Song::SaveSong(long long frames)
 {
 	mkdir(bb::getPath("Songs/" + name).string().c_str());
 	ofstream File(bb::getPath("Songs/" + name + "/data.song").string());
 	File << notes.size() << endl;
 	for (int i = 0; i < notes.size(); i++) {
-		File << notes[i].note << " " << notes[i].beat << endl;
+		File << notes[i].note << " " << (notes[i].beat - (frames*(notes[i].SPEED / 2000))) << endl;
 	}
+	cout << "Song Saved!" << endl;
 
 }
 
@@ -125,6 +126,9 @@ void Song::Play(float dt)
 {
 	for (int i = 0; i < notes.size(); i++) {
 		notes[i].Advance(dt);
+		if (notes[i].givesPoints) {
+			playableNotes.push_back(notes[i]);
+		}
 	}
 }
 

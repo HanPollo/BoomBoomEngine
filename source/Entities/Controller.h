@@ -19,6 +19,7 @@ namespace bb = BoomBoom;
 #include <sstream>
 #include <iostream>
 #include <map>
+#include <cstdlib>
 #include <vector>
 #include <GLFW/glfw3.h>
 using namespace std;
@@ -41,6 +42,8 @@ public:
 	long long getScore();
 	void updateScore(Song& song);
 
+	void PlayKeys(Song& song);
+
 	void Update();
 
 
@@ -50,6 +53,6 @@ private:
 	vector<Model> models;
 	shared_ptr<vector<Model>> shared_models = make_shared<vector<Model>>(move(models));
 	vector<int> key_map;
-	long long score;
+	long long score = 0;
 
 };

@@ -30,13 +30,13 @@ Note::~Note()
 
 void Note::Advance(float dt)
 {
-	if (beat < 3.0f) {
-		translate_vector[2] = backward_vector[2] += (dt * SPEED); //b_v += dt* speed
-		beat = transform_model[3][2];
-	}
+	//translate_vector[2] = backward_vector[2] += (dt * SPEED);
+	translate_vector[2] = SPEED / 100;
+	beat = transform_model[3][2];
+	if (beat > 1.825 && beat < 1.975)
+		givesPoints = true;
 	else
-		translate_vector = glm::vec3(0.0f, 0.0f, 0.0f);
-
+		givesPoints = false;
 }
 
 

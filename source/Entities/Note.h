@@ -36,9 +36,10 @@ public:
 
 	//void testDrawNote(Shader& shader);
 
-	const float SPEED = 50.0f;
+	const float SPEED = 10.0f;
 	int note;
 	float beat;
+	bool givesPoints = false;
 
 	glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
