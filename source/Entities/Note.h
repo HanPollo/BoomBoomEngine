@@ -40,6 +40,7 @@ public:
 	int note;
 	float beat;
 	bool givesPoints = false;
+	bool wasSavedAsPlayable = false;
 
 	glm::vec3 forward_vector = glm::vec3(0.0f, 0.0f, -0.1f);
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);

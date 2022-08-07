@@ -93,6 +93,11 @@ void Song::substractScore(long long x)
 	score -= x;
 }
 
+void Song::clearPlayed()
+{
+	playableNotes.clear();
+}
+
 void Song::SaveSong(long long frames)
 {
 	mkdir(bb::getPath("Songs/" + name).string().c_str());
@@ -126,8 +131,9 @@ void Song::Play(float dt)
 {
 	for (int i = 0; i < notes.size(); i++) {
 		notes[i].Advance(dt);
-		if (notes[i].givesPoints) {
-			playableNotes.push_back(notes[i]);
+		if (notes[i].givesPoints && !notes[i].wasSavedAsPlayable) {
+			playableNotes.push_back(&notes[i]);
+			notes[i].wasSavedAsPlayable = true;
 		}
 	}
 }

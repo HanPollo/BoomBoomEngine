@@ -155,6 +155,18 @@ namespace Engine {
                 controller->ProcessKey(3, action);
             if (key == GLFW_KEY_B)
                 controller->ProcessKey(4, action);
+            
+            if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+                controller->PlayKeys(*song);
+                song->clearPlayed();
+                cout << song->score << endl;
+            }
+            if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+                controller->PlayKeys(*song);
+                song->clearPlayed();
+                cout << song->score << endl;
+            }
+            
         }
         else if (mode == PAUSE)
         {

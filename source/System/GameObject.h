@@ -21,6 +21,7 @@ public:
 	void setShader(Shader& shader);
 
 	Shader& getShader();
+	bool wasStruck = false;
 
 	void positionObject(float x, float y, float z);
 	void Draw();
