@@ -46,6 +46,7 @@ public:
 	glm::vec3 backward_vector = glm::vec3(0.0f, 0.0f, 0.1f);
 
 	void Advance(float dt);
+	void Reset(long long frames);
 	//void Update() override;
 
 

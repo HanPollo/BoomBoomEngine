@@ -17,6 +17,7 @@ Song::Song()
 	shared_models->push_back(note3);
 	shared_models->push_back(note4);
 	shared_models->push_back(note5);
+	stage = "Yokohama";
 
 }
 
@@ -39,12 +40,15 @@ Song::Song(string name)
 	shared_models->push_back(note4);
 	shared_models->push_back(note5);
 
+	stage = "Yokohama";
+
 	
 	song = SE_LOAD(bb::getPath("Songs/"+name+"/"+name+".wav").string().c_str());
 	SoundSource source;
 	Asource = &source;
-	
 	LoadSong();
+	if(notes.empty())
+		SaveSong(0);
 }
 
 
@@ -128,6 +132,14 @@ void Song::LoadSong()
 
 
 
+}
+
+void Song::ResetSong(long long frames)
+{
+	score = 0;
+	for (int i = 0; i < notes.size(); i++) {
+		notes[i].Reset(frames);
+	}
 }
 
 void Song::setStage(string name)

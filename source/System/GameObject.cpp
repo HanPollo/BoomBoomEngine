@@ -28,7 +28,7 @@ Shader& GameObject::getShader() {
 
 void GameObject::Draw()
 {
-	if (object_model != nullptr && object_shader != nullptr && transform_model[3][2] < 3.0f && !wasStruck) {
+	if (object_model != nullptr && object_shader != nullptr && transform_model[3][2] < 3.0f && !wasStruck && transform_model[3][2] > -2.975f) {
 		object_shader->setMat4("model", transform_model);
 		object_model->Draw(*object_shader);
 		ResetVectors();

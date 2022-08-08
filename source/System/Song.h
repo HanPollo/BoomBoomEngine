@@ -35,6 +35,7 @@ public:
 	SoundSource* Asource = nullptr;
 	long long score = 0;
 
+
 	int song;
 	void DrawNotes();
 	void UpdateNotes();
@@ -47,7 +48,7 @@ public:
 	
 	void SaveSong(long long frames);
 	void LoadSong();
-
+	void ResetSong(long long frames);
 	void setStage(string name);
 
 	//void PlaySong();

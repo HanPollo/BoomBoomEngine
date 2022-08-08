@@ -39,4 +39,11 @@ void Note::Advance(float dt)
 		givesPoints = false;
 }
 
+void Note::Reset(long long frames)
+{
+	beat -= (frames * SPEED / 2000);
+	transform_model = glm::translate(transform_model, glm::vec3(0, 0, beat));
+
+}
+
 

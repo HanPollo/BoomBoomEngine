@@ -35,12 +35,16 @@ void Cursor::ProcessKeyboard(cur::Cursor_Movement direction)
     madeChanges = true;
     float velocity = SPEED;
     if (direction == cur::FORWARD) {
-        translate_vector = forward_vector * velocity;
-        beat = transform_model[3][2];
+        if (transform_model[3][2] > -2.95) {
+            translate_vector = forward_vector * velocity;
+            beat = transform_model[3][2];
+        }
     }
     if (direction == cur::BACKWARD) {
-        translate_vector = backward_vector * velocity;
-        beat = transform_model[3][2];
+        if (transform_model[3][2] < 1.9f) {
+            translate_vector = backward_vector * velocity;
+            beat = transform_model[3][2];
+        }
     }
     if (direction == cur::LEFT) {
         if (!note_buffer_left && note != 1) {

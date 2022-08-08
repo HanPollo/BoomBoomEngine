@@ -51,8 +51,7 @@ namespace Engine {
     //Song
     shared_ptr<Song> song;
     //Cursor & Controller
-    shared_ptr<Cursor> cursor;
-    
+    shared_ptr<Cursor> cursor;    
     shared_ptr<Controller> controller;
     //Stage
     shared_ptr<Skybox> stage;
@@ -126,7 +125,14 @@ namespace Engine {
                 cursor->note_buffer_left = 0;
             if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
                 cursor->note_buffer_right = 0;
-
+            /*
+            if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+                song->ResetSong(playedFrames);
+                mapChange = true;
+                playedTime = 0;
+                playedFrames = 0;
+            }
+            */
             if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
                 if (!cursor->create_note_buffer) {
                     cursor->Update();
@@ -214,6 +220,11 @@ namespace Engine {
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     {
         camera.ProcessMouseScroll(static_cast<float>(yoffset));
+    }
+
+    void chooseSong() {
+        cout << endl << "Enter the name of the song: ";
+        cin >> song_name;
     }
 
     void init()
