@@ -35,6 +35,7 @@ namespace Engine {
     string song_name;
     Mode mode = EDIT;
     bool firstMouse = true;
+    bool firstBoot = true;
 
     // settings
     const unsigned int SCR_WIDTH = 900;
@@ -53,6 +54,8 @@ namespace Engine {
     //Cursor & Controller
     shared_ptr<Cursor> cursor;    
     shared_ptr<Controller> controller;
+    vector<int> controller_keys;
+    vector<int> reserved_keys;
     //Stage
     shared_ptr<Skybox> stage;
     shared_ptr<Model> guitar;
@@ -61,10 +64,10 @@ namespace Engine {
     //Audio
     //shared_ptr<SoundDevice> sd = make_shared<SoundDevice>(LISTENER->Get());
     SoundDevice* sd = LISTENER->Get();
-    SoundLibrary* AudioLib = SoundLibrary::Get();
+    SoundLibrary* AudioLib;
     vector<int> sounds;
-    SoundSource cursor_source;
-    SoundSource main_source;
+    shared_ptr<SoundSource> cursor_source;
+    shared_ptr<SoundSource> main_source;
     int ID_Song;
 
     vector<Model> models;
@@ -73,9 +76,29 @@ namespace Engine {
     float lastFrame = 0.0f;
     float playedTime = 0.0f;
     long long playedFrames = 0;
+    
 
     bool mapChange = true;
+    void changeSong();
+    void resetSong();
 
+    void setReservedKeys() {
+        reserved_keys.push_back(GLFW_KEY_0);
+        reserved_keys.push_back(GLFW_KEY_SPACE);
+        reserved_keys.push_back(GLFW_KEY_ESCAPE);
+        reserved_keys.push_back(GLFW_KEY_F1);
+        reserved_keys.push_back(GLFW_KEY_F2);
+        reserved_keys.push_back(GLFW_KEY_P);
+        reserved_keys.push_back(GLFW_KEY_D);
+        reserved_keys.push_back(GLFW_KEY_ENTER);
+        reserved_keys.push_back(GLFW_KEY_UP);
+        reserved_keys.push_back(GLFW_KEY_DOWN);
+        reserved_keys.push_back(GLFW_KEY_LEFT);
+        reserved_keys.push_back(GLFW_KEY_RIGHT);
+        reserved_keys.push_back(GLFW_KEY_R);
+        reserved_keys.push_back(GLFW_KEY_Q);
+
+    }
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -85,7 +108,7 @@ namespace Engine {
             mode = EDIT;
             mapChange = true;
             if (playedTime != 0)
-                main_source.Pause();
+                main_source->Pause();
         }
         if (key == GLFW_KEY_F2 && action == GLFW_PRESS) {
             if (mode != PLAY) {
@@ -93,25 +116,17 @@ namespace Engine {
                 mode = PLAY;
                 mapChange = true;
                 if (playedTime == 0)
-                    main_source.Play(ID_Song);
+                    main_source->Play(ID_Song);
                 else
-                    main_source.Resume();
+                    main_source->Resume();
             }
         }
 
         if (mode == EDIT)
         {
-            if (key == GLFW_KEY_M && action == GLFW_PRESS)
-                camera.ProcessKeyboard(cam::FIX, deltaTime);
-            if (key == GLFW_KEY_W && action == GLFW_PRESS)
-                camera.ProcessKeyboard(cam::FORWARD, deltaTime);
-            if (key == GLFW_KEY_S && action == GLFW_PRESS)
-                camera.ProcessKeyboard(cam::BACKWARD, deltaTime);
-            if (key == GLFW_KEY_A && action == GLFW_PRESS)
-                camera.ProcessKeyboard(cam::LEFT, deltaTime);
             if (key == GLFW_KEY_D && action == GLFW_PRESS)
-                camera.ProcessKeyboard(cam::RIGHT, deltaTime);
-            if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+                camera.ProcessKeyboard(cam::FIX, deltaTime);
+            if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
                 song->SaveSong(playedFrames);
             if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) 
                 cursor->ProcessKeyboard(cur::FORWARD);
@@ -125,14 +140,13 @@ namespace Engine {
                 cursor->note_buffer_left = 0;
             if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
                 cursor->note_buffer_right = 0;
-            /*
+            if (key == GLFW_KEY_Q && action == GLFW_PRESS) {
+                changeSong();
+            } 
             if (key == GLFW_KEY_R && action == GLFW_PRESS) {
-                song->ResetSong(playedFrames);
-                mapChange = true;
-                playedTime = 0;
-                playedFrames = 0;
+                resetSong();
             }
-            */
+            
             if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
                 if (!cursor->create_note_buffer) {
                     cursor->Update();
@@ -143,24 +157,53 @@ namespace Engine {
             }
             if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
                 cursor->create_note_buffer = 0;
+            /*
+            if (key == GLFW_KEY_0 && action == GLFW_PRESS) {
+                int buffer = 1;
+                vector<int> keys;
+                if (buffer == 1) {
+                    buffer = 0;
+                    int buffer2 = 0;
+                    for (int i = 0; i < 5; i++) {
+                        if (buffer2 == 0) {
+                            cout << "Press key for Note " + to_string(i + 1);
+                            buffer2 = 1;
+                            if (action == GLFW_PRESS) {
+                                int is_reserved = 0;
+                                for (int j = 0; j < reserved_keys.size(); j++) {
+                                    if (key == reserved_keys[j])
+                                        is_reserved = 1;                                                          
+                                }
+                                if(is_reserved)
+                                    cout << "That key is locked press another one";
+                                else {
+                                    controller->setKeyMap(i, key);
+                                    buffer2 = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            */
         }
         else if (mode == PLAY)
         {
             if (key == GLFW_KEY_P && action == GLFW_PRESS) {
                 cout << "Pause" << endl;
-                main_source.Pause();
+                main_source->Pause();
                 mode = PAUSE;
             }
 
-            if (key == GLFW_KEY_Z)
+            if (key == controller->getKey(0))
                 controller->ProcessKey(0, action);
-            if (key == GLFW_KEY_X)
+            if (key == controller->getKey(1))
                 controller->ProcessKey(1, action);
-            if (key == GLFW_KEY_C)
+            if (key == controller->getKey(2))
                 controller->ProcessKey(2, action);
-            if (key == GLFW_KEY_V)
+            if (key == controller->getKey(3))
                 controller->ProcessKey(3, action);
-            if (key == GLFW_KEY_B)
+            if (key == controller->getKey(4))
                 controller->ProcessKey(4, action);
             
             if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
@@ -179,8 +222,11 @@ namespace Engine {
         {
             if (key == GLFW_KEY_P && action == GLFW_PRESS) {
                 cout << "Play" << endl;
-                main_source.Resume();
+                main_source->Resume();
                 mode = PLAY;
+            }
+            if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+                resetSong();
             }
         }
     }
@@ -229,49 +275,63 @@ namespace Engine {
 
     void init()
     {
-        cout << "Welcome to Boom Boom Engine!\n" << "Here you can create Rhythm Games ;)\n";
-        cout << "To create a new song create a folder with the song name in the Songs directory\n" << "Add the MONO .wav song with the same name to it \n";
-        cout << "To add stage background create a folder with the stage name in the Resources/Stage directory\n" << "Add the 6 sides of the skybox to it named posx, negx, posy, negy, posz, negz representing positive and negative in the axes. \n";
-        cout << endl << "Enter the name of the song: ";
-        cin >> song_name;
-        // glfw: initialize and configure
-        // ------------------------------
-        glfwInit();
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        if (firstBoot) {
+            cout << "Welcome to Boom Boom Engine!\n" << "Here you can create Rhythm Games ;)\n";
+            cout << "To create a new song create a folder with the song name in the Songs directory\n" << "Add the MONO .wav song with the same name to it \n";
+            cout << "To add stage background create a folder with the stage name in the Resources/Stage directory\n" << "Add the 6 sides of the skybox to it named posx, negx, posy, negy, posz, negz representing positive and negative in the axes. \n";
+            chooseSong();
+            // glfw: initialize and configure
+            // ------------------------------
+            glfwInit();
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-        // glfw window creation
-        // --------------------
-        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Boom Boom Engine", NULL, NULL);
-        if (window == NULL)
-        {
-            std::cout << "Failed to create GLFW window" << std::endl;
-            glfwTerminate();
-            //throw
+            // glfw window creation
+            // --------------------
+            window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Boom Boom Engine", NULL, NULL);
+            if (window == NULL)
+            {
+                std::cout << "Failed to create GLFW window" << std::endl;
+                glfwTerminate();
+                //throw
+            }
+            //glfwSetKeyCallback(window, key_callback);
+            glfwMakeContextCurrent(window);
+
+            glfwSetKeyCallback(window, key_callback);
+            glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+            glfwSetCursorPosCallback(window, mouse_callback);
+            glfwSetScrollCallback(window, scroll_callback);
+
+            // tell GLFW to capture our mouse
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+            // glad: load all OpenGL function pointers
+            // ---------------------------------------
+            if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+            {
+                std::cout << "Failed to initialize GLAD" << std::endl;
+                //throw
+            }
         }
-        //glfwSetKeyCallback(window, key_callback);
-        glfwMakeContextCurrent(window);
+        firstMouse = true;
+        firstBoot = false;
+        AudioLib = SoundLibrary::Get();
+        deltaTime = 0.0f;
+        lastFrame = 0.0f;
+        playedTime = 0.0f;
+        playedFrames = 0;
+        //Audio Sources
+        SoundSource source1;
+        cursor_source = make_shared<SoundSource>(source1);
+        SoundSource source2;
+        main_source = make_shared<SoundSource>(source2);
 
-        glfwSetKeyCallback(window, key_callback);
-        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-        glfwSetCursorPosCallback(window, mouse_callback);
-        glfwSetScrollCallback(window, scroll_callback);
-
-        // tell GLFW to capture our mouse
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-        // glad: load all OpenGL function pointers
-        // ---------------------------------------
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            std::cout << "Failed to initialize GLAD" << std::endl;
-            //throw
-        }
         //Song
         Song aux_song(song_name);
         song = make_shared<Song>(aux_song);
@@ -311,7 +371,7 @@ namespace Engine {
         cursor->setModel(models[0]);
         cursor->setShader(*ourShader);
         controller->setShader(*ourShader);
-        cursor->addAudioSource(cursor_source);
+        cursor->addAudioSource(*cursor_source);
         cursor->addSound(sound2);
         cursor->Update();
 
@@ -376,7 +436,7 @@ namespace Engine {
                 mapChange = false;
                 glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glEnable(GL_DEPTH_TEST);
+                //glEnable(GL_DEPTH_TEST);
 
                 stage->Draw(view, projection);
 
@@ -401,7 +461,7 @@ namespace Engine {
                 mapChange = false;
                 glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glEnable(GL_DEPTH_TEST);
+                //glEnable(GL_DEPTH_TEST);
 
                 stage->Draw(view, projection);
 
@@ -452,4 +512,41 @@ namespace Engine {
         return (!glfwWindowShouldClose(window));
     }
 
+    void changeSong() {
+        song->SaveSong(playedFrames);
+
+        chooseSong();
+        
+        Song aux_song(song_name);
+        song = make_shared<Song>(aux_song);
+        main_source->Stop();
+        ID_Song = AudioLib->Load(bb::getPath("Songs/" + song->name + "/" + song->name + ".wav").string().c_str());
+        song->setNoteShaders(*ourShader);
+        Skybox skybox(song->stage);
+        stage = make_shared<Skybox>(skybox);
+
+        playedTime = 0;
+        playedFrames = 0;
+        mapChange = true;
+    }
+    void resetSong() {
+        song->SaveSong(playedFrames);
+
+        cout << "Restarting" << endl;
+        Song aux_song(song_name);
+        song = make_shared<Song>(aux_song);
+        main_source->Stop();
+        song->setNoteShaders(*ourShader);
+        Skybox skybox(song->stage);
+        stage = make_shared<Skybox>(skybox);
+
+        playedTime = 0;
+        playedFrames = 0;
+        mapChange = true;
+        cout << "Reset" << endl;
+    }
+    void teardown() {
+        ALuint mainSourceID = main_source->getSourceID();
+        alDeleteSources(1, &mainSourceID);
+    }
 }

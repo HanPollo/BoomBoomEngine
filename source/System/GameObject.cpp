@@ -9,6 +9,8 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+	if(object_Asource != nullptr)
+		alDeleteSources(1, &sourceID);
 }
 
 
@@ -37,6 +39,7 @@ void GameObject::Draw()
 
 void GameObject::addAudioSource(SoundSource& audio_source)
 {
+	sourceID = audio_source.getSourceID();
 	object_Asource = make_shared<SoundSource>(audio_source);
 	object_Asource->SetPosition(position[0], position[1], position[2]);
 }

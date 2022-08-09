@@ -50,6 +50,7 @@ protected:
 	Model* object_model;
 	Shader* object_shader;
 	shared_ptr<SoundSource> object_Asource = nullptr;
+	ALuint sourceID;
 
 	glm::mat4 transform_model = glm::mat4(1.0f);
 

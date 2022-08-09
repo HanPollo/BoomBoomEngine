@@ -7,5 +7,6 @@ int main()
 	MainLoop::Get()->AddToOnBegin([]() {Engine::processStage(); Engine::init(); });
 	MainLoop::Get()->AddToOnUpdate([](float dt) {Engine::update(dt); /*TTD::processAI(dt);*/ });
 	MainLoop::Get()->AddToOnPostUpdate([]() {Engine::render(); });
+	MainLoop::Get()->AddToOnTeardown([]() {Engine::teardown(); });
 	return MainLoop::Get()->Run();
 }

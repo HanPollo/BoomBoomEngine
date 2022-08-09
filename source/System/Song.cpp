@@ -107,6 +107,8 @@ void Song::SaveSong(long long frames)
 	mkdir(bb::getPath("Songs/" + name).string().c_str());
 	ofstream File(bb::getPath("Songs/" + name + "/data.song").string());
 	File << stage << endl << notes.size() << endl;
+	if (stage == "")
+		stage = "Yokohama";
 	for (int i = 0; i < notes.size(); i++) {
 		File << notes[i].note << " " << (notes[i].beat - (frames*(notes[i].SPEED / 2000))) << endl;
 	}

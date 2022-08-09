@@ -38,6 +38,7 @@ public:
 
 	void ProcessInput(GLFWwindow* window);
 	void ProcessKey(int note, int action);
+	void setKeyMap(int note, int key);
 
 	long long getScore();
 	void updateScore(Song& song);

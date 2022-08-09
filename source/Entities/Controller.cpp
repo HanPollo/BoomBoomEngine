@@ -45,6 +45,11 @@ void Controller::Draw()
 	}
 }
 
+int Controller::getKey(int noteNum)
+{
+	return key_map[noteNum];
+}
+
 
 void Controller::ProcessInput(GLFWwindow* window)
 {
@@ -79,6 +84,14 @@ void Controller::ProcessKey(int note, int action)
 		}
 	}
 }
+
+void Controller::setKeyMap(int note, int key)
+{
+	key_map[note] = key;
+	notes[note].Scale(0.8);
+	notes[note].Scale(1.25);
+}
+
 
 
 long long Controller::getScore()
