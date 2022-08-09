@@ -227,6 +227,8 @@ namespace Engine {
             }
             if (key == GLFW_KEY_R && action == GLFW_PRESS) {
                 resetSong();
+                mode = PLAY;
+                main_source->Play(ID_Song);
             }
         }
     }
