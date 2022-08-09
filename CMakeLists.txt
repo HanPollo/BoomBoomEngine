@@ -29,3 +29,4 @@ configure_file(CMakeConfigFiles/root_directory.h.in "${CMAKE_SOURCE_DIR}/source/
 add_subdirectory(third_party)
 add_subdirectory(source)
 add_subdirectory(Examples)
+add_subdirectory(Engine)
